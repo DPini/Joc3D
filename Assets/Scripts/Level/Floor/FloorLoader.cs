@@ -14,9 +14,9 @@ public class FloorLoader : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        nRow = 0;
+        nRow = -4;
         int prevZone = -1;
-        while(nRow < 100)
+        while(nRow < 40)
         {
             int zoneType = GetRandomeZoneInt(prevZone);
             nRow += createZone(zoneType);
@@ -33,8 +33,8 @@ public class FloorLoader : MonoBehaviour
     }
 
     private int createZone(int zoneType) {
-        Debug.Log("creating zone: " + zoneType);
         int zoneSize = GetRandomZoneSize(zoneType);
+        if (nRow < 0) zoneSize += 4;
         GameObject floorInstance = GetTile(zoneType);
         for (int i = nRow; i < nRow + zoneSize; ++i) {
             CreateRow(i, floorInstance);
@@ -71,7 +71,7 @@ public class FloorLoader : MonoBehaviour
 
     private void CreateRow(float position, GameObject floorInstance) {
         GameObject obj;
-        for (int i = -10; i < 10; ++i) {
+        for (int i = -20; i < 20; ++i) {
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             obj.transform.parent = gameObject.transform;
         } 
