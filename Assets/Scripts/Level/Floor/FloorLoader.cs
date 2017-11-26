@@ -8,13 +8,20 @@ public class FloorLoader : MonoBehaviour
     public GameObject safeFloorInstance;
     public GameObject roadFloorInstance;
 
-    private int tamFloor = 1;
+    private int nRow;
+
+    private float tamFloor = 1.5f;
     // Use this for initialization
     void Start()
     {
-        for (int i = 0; i < 100; ++i)
+        nRow = -4;
+        int prevZone = -1;
+        while(nRow < 40)
         {
-            CreateRow(i);
+            int zoneType = GetRandomeZoneInt(prevZone);
+            nRow += createZone(zoneType);
+
+            prevZone = zoneType;
         }
 
     }
@@ -25,20 +32,54 @@ public class FloorLoader : MonoBehaviour
         //do nothing
     }
 
-    private void CreateRow(float position) {
-        GameObject floorInstance = GetRandomTile();
+    private int createZone(int zoneType) {
+        int zoneSize = GetRandomZoneSize(zoneType);
+        if (nRow < 0) zoneSize += 4;
+        GameObject floorInstance = GetTile(zoneType);
+        for (int i = nRow; i < nRow + zoneSize; ++i) {
+            CreateRow(i, floorInstance);
+        }
+
+        return zoneSize;
+
+    }
+
+    private int GetRandomZoneSize(int type)
+    {
+        int size;
+        switch (type) { 
+            case 1: //road
+                size = Random.Range(1, 6);
+                break;
+            default: //safe-zone
+                size = Random.Range(1, 3);
+                break;
+        }
+        return size;
+    }
+
+    private int GetRandomeZoneInt(int prevZone)
+    {
+        if (prevZone == -1) return 0;
+        int rnd = Random.Range(0, 2);
+        while (rnd == prevZone)
+        {
+            rnd = Random.Range(0, 2);
+        }
+        return rnd;
+    }
+
+    private void CreateRow(float position, GameObject floorInstance) {
         GameObject obj;
-        for (int i = -10; i < 10; ++i) {
+        for (int i = -20; i < 20; ++i) {
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             obj.transform.parent = gameObject.transform;
         } 
     }
 
-    private GameObject GetRandomTile() {
+    private GameObject GetTile(int tile) {
         GameObject ret;
-        int rnd = Random.Range(0, 2);
-        Debug.Log("rand: " + rnd);
-        switch (rnd) {
+        switch (tile) {
             case 1:
                 ret = roadFloorInstance;
                 break;
