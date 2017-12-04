@@ -22,12 +22,16 @@ public class PlayerMovement : MonoBehaviour {
     //public float gravity = 9.81f;
     public float gravity = 40.0f;
 
+    public float jump_player_scale = 0.8f;
+
     private directions direction = directions.up;
 
-    private float jump_time;
+    //private float jump_time;
+    //private float jump_time_count;
     private Vector3 velocity;
     private Vector3 dest_pos;
     private float angular_velocity;
+    private float player_scale_step;
     
 
 
@@ -82,7 +86,10 @@ public class PlayerMovement : MonoBehaviour {
         float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
         float Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * jump_angle);
 
-        jump_time = Vy * 2 / gravity;
+        float jump_time = Vy * 2 / gravity;
+        player_scale_step = ( 1.0f-jump_player_scale )/(jump_time/2);
+        //jump_time_count = 0;
+
 
         angular_velocity = calc_jump_rotation(d) / jump_time;
 
@@ -119,9 +126,16 @@ public class PlayerMovement : MonoBehaviour {
      */
     void physics_update(){
         if ( state == states.jumping ){
+            //jump_time_count += Time.deltaTime;
             velocity.y -= gravity * Time.deltaTime;
             gameObject.transform.position += velocity * Time.deltaTime;
             gameObject.transform.Rotate(0, angular_velocity * Time.deltaTime, 0);
+            transform.localScale += new Vector3(
+                0.0f,
+                ( transform.localScale.y <= jump_player_scale ? player_scale_step : -player_scale_step ) * Time.deltaTime,
+                0.0f
+            );
+            
         }
     }
 
@@ -149,6 +163,7 @@ public class PlayerMovement : MonoBehaviour {
                 //gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 velocity = Vector3.zero;
                 angular_velocity = 0;
+                transform.localScale = new Vector3(1,1,1);
                 // Place player in precise position.
                 transform.position = dest_pos;
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
