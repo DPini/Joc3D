@@ -25,10 +25,9 @@ public class PlayerMovement : MonoBehaviour {
     private directions direction = directions.up;
 
     private float jump_time;
-    private float current_jump;
-
     private Vector3 velocity;
     private Vector3 dest_pos;
+    private float angular_velocity;
     
 
 
@@ -64,7 +63,14 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    float calc_jump_rotation(directions d)
+    {
+        return Vector3.SignedAngle(direction_vector(direction), direction_vector(d), Vector3.up );
+    }
+
     void jump(directions d){
+
+        // Based on: https://vilbeyli.github.io/Simple-Trajectory-Motion-Example-Unity3D/
 
         //jump_time = 0;
         //current_jump = 0;
@@ -76,6 +82,10 @@ public class PlayerMovement : MonoBehaviour {
         float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
         float Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * jump_angle);
 
+        jump_time = Vy * 2 / gravity;
+
+        angular_velocity = calc_jump_rotation(d) / jump_time;
+
         velocity = ( Vx * direction_vector(d) ) + new Vector3( 0.0f, Vy, 0.0f );
 
         // Debug.Log("##### JUMPING #####");
@@ -86,6 +96,7 @@ public class PlayerMovement : MonoBehaviour {
         // Debug.Log("Velocity = " + velocity);
 
         state = states.jumping;
+        direction = d;
         //gameObject.GetComponent<Rigidbody>().isKinematic = false;
 
 
@@ -110,6 +121,7 @@ public class PlayerMovement : MonoBehaviour {
         if ( state == states.jumping ){
             velocity.y -= gravity * Time.deltaTime;
             gameObject.transform.position += velocity * Time.deltaTime;
+            gameObject.transform.Rotate(0, angular_velocity * Time.deltaTime, 0);
         }
     }
 
@@ -136,8 +148,11 @@ public class PlayerMovement : MonoBehaviour {
                 Debug.Log("STOPPPPPPPPPPPPPPPPP");
                 //gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 velocity = Vector3.zero;
+                angular_velocity = 0;
                 // Place player in precise position.
                 transform.position = dest_pos;
+                transform.rotation = Quaternion.LookRotation(direction_vector(direction));
+
                 Debug.Log("Position after jumping: " + transform.position);
                 state = states.idle;
             }
