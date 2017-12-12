@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1052474530}
   - component: {fileID: 1052474529}
+  - component: {fileID: 1052474531}
   m_Layer: 0
   m_Name: level-loader
   m_TagString: Untagged
@@ -267,6 +268,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1052474531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1052474528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7bf35ea6f9534d10b9dfd98ecebd53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trees:
+  - {fileID: 100002, guid: 77f2596ea80aeb14c93a546f7d2da549, type: 3}
+  - {fileID: 100002, guid: e1c1726c50a38724f826ab572d474a48, type: 3}
+  - {fileID: 100002, guid: f17acadd865c1b240a503ce53c1fbfa0, type: 3}
+  mediumTreeInstance: {fileID: 0}
+  bigTreeInstance: {fileID: 0}
 --- !u!1 &1181670261
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +385,7 @@ MonoBehaviour:
   jump_speed: 1
   jump_angle: 45
   gravity: 40
+  jump_player_scale: 0.8
 --- !u!54 &1364316345
 Rigidbody:
   m_ObjectHideFlags: 0

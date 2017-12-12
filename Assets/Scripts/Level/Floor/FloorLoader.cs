@@ -38,6 +38,7 @@ public class FloorLoader : MonoBehaviour
         GameObject floorInstance = GetTile(zoneType);
         for (int i = nRow; i < nRow + zoneSize; ++i) {
             CreateRow(i, floorInstance);
+            gameObject.GetComponent<LevelDecorator>().DecorateRow(i, zoneType);
         }
 
         return zoneSize;
