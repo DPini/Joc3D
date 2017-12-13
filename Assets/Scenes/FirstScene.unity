@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 1052474530}
   - component: {fileID: 1052474529}
   m_Layer: 0
-  m_Name: level-loader
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1052474528}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a04350bf4b39d5d4c8bd4c1deab2be73, type: 3}
+  m_Script: {fileID: 11500000, guid: e889d1eb054b41d498b95c9321052ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   safeFloorInstance: {fileID: 1588364144290146, guid: 8892039404f0b17419be574d93b4d064,
