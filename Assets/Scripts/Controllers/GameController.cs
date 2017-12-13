@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
         levelController = new LevelController();
         levelController.Start();
         levelController.LoadPrefabs(safeFloorInstance, roadFloorInstance);
-        levelController.InitFloor();
+        levelController.InitMap();
 	}
 	
 	// Update is called once per frame

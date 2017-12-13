@@ -5,9 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class LevelController {
 
+    struct Tile {
+        int tile;
+        bool isDecorated;
+    }
+
     private FloorLoader floorLoader;
 
-    public int[,] matrixLevel;
+    private int[,] matrixLevel;
+
     public int lastPosUpdated;
 
 	// Use this for initialization
@@ -19,9 +25,14 @@ public class LevelController {
         floorLoader.LoadPrefabs(safeFloor, roadFloor);
     }
 
-    public void InitFloor() {
+    public void InitMap() {
         matrixLevel = floorLoader.InitializeFloor();
-
+        for (int i = 0; i < 100; ++i) {
+            for (int j = 0; j < 50; ++j)
+            {
+                Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j]);
+            }
+        }
         Debug.Log(matrixLevel);
     }
 }
