@@ -6,8 +6,10 @@ using UnityEngine;
 public class FloorLoader : MonoBehaviour
 {
     //Floor prefabs
-    public GameObject safeFloorInstance;
-    public GameObject roadFloorInstance;
+    public GameObject[] safeFloorInstance;
+    public GameObject[] roadFloorInstance;
+    public GameObject[] riverFloorInstance;
+
 
     private int nRow;
     private int nColumns = 40;
@@ -100,11 +102,11 @@ public class FloorLoader : MonoBehaviour
             case 1:
                 //if(pos == 0)
                 //if(pos == zoneSize - 1)
-                ret = roadFloorInstance;
+                ret = roadFloorInstance[0];
                 break;
             default:
-                //if(pos % 2 == 0)
-                ret = safeFloorInstance;
+                if(pos % 2 == 0) ret = safeFloorInstance[1];
+                else ret = safeFloorInstance[0];
                 break;
         }
         return ret;

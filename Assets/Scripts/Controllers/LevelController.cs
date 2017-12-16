@@ -11,7 +11,7 @@ public class LevelController : MonoBehaviour {
     public int lastPosUpdated;
 
 	// Use this for initialization
-	public void Start () {
+	public void Init () {
         floorLoader = GameObject.Find("Level").GetComponent<FloorLoader>();
     }
 

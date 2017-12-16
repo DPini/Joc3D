@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private enum directions { left, right , up, down };
+   
 
     private enum states { idle, jumping, falling };
 
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float jump_player_scale = 0.8f;
 
-    private directions direction = directions.up;
+    private Directions direction = Directions.up;
 
     private Vector3 velocity;
     private Vector3 dest_pos;
@@ -36,22 +36,22 @@ public class PlayerMovement : MonoBehaviour {
 		
 	}
 
-    Vector3 direction_vector(directions d){
+    Vector3 direction_vector(Directions d){
 
         Vector3 res;
         
         switch (d)
         {
-            case directions.up:
+            case Directions.up:
                 res = Vector3.forward;
                 break;
-            case directions.down:
+            case Directions.down:
                 res = Vector3.back;
                 break;
-            case directions.left:
+            case Directions.left:
                 res = Vector3.left;
                 break;
-            case directions.right:
+            case Directions.right:
                 res = Vector3.right;
                 break;
             default:
@@ -63,39 +63,43 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
-    float calc_jump_rotation(directions d)
+    float calc_jump_rotation(Directions d)
     {
         return Vector3.SignedAngle(direction_vector(direction), direction_vector(d), Vector3.up );
     }
 
-    void jump(directions d){
+    public void Jump(Directions d){
 
         // Based on: https://vilbeyli.github.io/Simple-Trajectory-Motion-Example-Unity3D/
 
+        if (state == states.jumping || state == states.falling)
+        {
+            Physics_update();
+        }
+        else {
+            dest_pos = transform.position + direction_vector(d) * jump_dist;
 
-        dest_pos = transform.position + direction_vector(d)*jump_dist;        
+            float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
+            Debug.Log("Vi = " + Vi);
+            float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
+            float Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * jump_angle);
 
-        float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
-        Debug.Log("Vi = " + Vi);
-        float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
-        float Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * jump_angle);
-
-        float jump_time = Vy * 2 / gravity;
-        player_scale_step = ( 1.0f-jump_player_scale )/(jump_time/2);
+            float jump_time = Vy * 2 / gravity;
+            player_scale_step = (1.0f - jump_player_scale) / (jump_time / 2);
 
 
-        angular_velocity = calc_jump_rotation(d) / jump_time;
+            angular_velocity = calc_jump_rotation(d) / jump_time;
 
-        velocity = ( Vx * direction_vector(d) ) + new Vector3( 0.0f, Vy, 0.0f );
+            velocity = (Vx * direction_vector(d)) + new Vector3(0.0f, Vy, 0.0f);
 
 
-        state = states.jumping;
-        direction = d;
-
+            state = states.jumping;
+            direction = d;
+        }
 
     }
     
-    void physics_update(){
+    public void Physics_update(){
         if ( state == states.jumping ){
             //jump_time_count += Time.deltaTime;
             velocity.y -= gravity * Time.deltaTime;
@@ -125,32 +129,5 @@ public class PlayerMovement : MonoBehaviour {
                 state = states.idle;
             }
         }
-    }
-
-	
-	// Update is called once per frame
-	//void Update () {
-    void FixedUpdate(){
-
-        if ( state == states.jumping || state == states.falling ){
-            physics_update();
-        }
-        else{
-            if(Input.GetKey(KeyCode.LeftArrow)){
-                
-                jump(directions.left);
-            }
-            else if (Input.GetKey(KeyCode.RightArrow)){
-                jump(directions.right);
-            }
-            else if (Input.GetKey(KeyCode.UpArrow)){
-                jump(directions.up);
-            }
-            else if (Input.GetKey(KeyCode.DownArrow)){
-                jump(directions.down);
-            }
-        }
-
-
     }
 }

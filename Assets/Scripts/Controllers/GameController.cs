@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    private GameObject controllers;
+
     private LevelController levelController;
-	// Use this for initialization
-	void Start () {
-        levelController = new LevelController();
-        levelController.Start();
+    private PlayerController playerController;
+
+    // Use this for initialization
+    void Start () {
+        controllers = GameObject.Find("Controllers");
+        levelController = controllers.GetComponent<LevelController>();
+        playerController = controllers.GetComponent<PlayerController>();
+
+        levelController.Init();
+        playerController.Init();
+
         levelController.InitMap();
 	}
 	
@@ -16,4 +25,25 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            playerController.Jump(Directions.left);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            playerController.Jump(Directions.right);
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            playerController.Jump(Directions.up);
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            playerController.Jump(Directions.down);
+        }
+        else playerController.update();
+    }
 }
