@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class LevelController {
-
-    struct Tile {
-        int tile;
-        bool isDecorated;
-    }
+public class LevelController : MonoBehaviour {
 
     private FloorLoader floorLoader;
 
@@ -18,11 +12,7 @@ public class LevelController {
 
 	// Use this for initialization
 	public void Start () {
-        floorLoader = new FloorLoader();
-    }
-
-    public void LoadPrefabs(GameObject safeFloor, GameObject roadFloor) {
-        floorLoader.LoadPrefabs(safeFloor, roadFloor);
+        floorLoader = GameObject.Find("Level").GetComponent<FloorLoader>();
     }
 
     public void InitMap() {

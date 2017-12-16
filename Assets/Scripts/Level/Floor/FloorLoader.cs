@@ -16,18 +16,12 @@ public class FloorLoader : MonoBehaviour
 
     private LevelDecorator levelDecorator;
 
-    public void LoadPrefabs(GameObject safeFloor, GameObject roadFloor)
-    {
-        safeFloorInstance = safeFloor;
-        roadFloorInstance = roadFloor;
-    }
-
     // Use this for initialization
     public int[,] InitializeFloor()
     {
         int[,] matrixLevel = new int[100,50];
         int lastZoneUpdated = -4;
-        levelDecorator = GameObject.Find("Controller").GetComponent<LevelDecorator>();
+        levelDecorator = GameObject.Find("Level").GetComponent<LevelDecorator>();
 
         nRow = -4;
         int prevZone = -1;
