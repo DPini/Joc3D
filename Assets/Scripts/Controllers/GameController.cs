@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        controllers = GameObject.Find("Controllers");
+        controllers = gameObject;
         levelController = controllers.GetComponent<LevelController>();
         playerController = controllers.GetComponent<PlayerController>();
 
