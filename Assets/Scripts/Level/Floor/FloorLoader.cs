@@ -19,9 +19,9 @@ public class FloorLoader : MonoBehaviour
     private LevelDecorator levelDecorator;
 
     // Use this for initialization
-    public int[,] InitializeFloor()
+    public Tile[,] InitializeFloor()
     {
-        int[,] matrixLevel = new int[100,50];
+        Tile[,] matrixLevel = new Tile[100,50];
         int lastZoneUpdated = -4;
         levelDecorator = GameObject.Find("Level").GetComponent<LevelDecorator>();
 
@@ -92,7 +92,7 @@ public class FloorLoader : MonoBehaviour
         GameObject obj;
         for (int i = -35; i < 20; ++i) {
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
-            //obj.transform.parent = gameObject.transform;
+            obj.transform.parent = gameObject.transform;
         } 
     }
 

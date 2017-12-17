@@ -6,7 +6,7 @@ public class LevelController : MonoBehaviour {
 
     private FloorLoader floorLoader;
 
-    private int[,] matrixLevel;
+    private Tile[,] matrixLevel;
 
     public int lastPosUpdated;
 
@@ -20,7 +20,7 @@ public class LevelController : MonoBehaviour {
         for (int i = 0; i < 100; ++i) {
             for (int j = 0; j < 50; ++j)
             {
-                Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j]);
+                Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j].zone);
             }
         }
         Debug.Log(matrixLevel);
