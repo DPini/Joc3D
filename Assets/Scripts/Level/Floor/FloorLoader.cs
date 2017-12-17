@@ -12,7 +12,7 @@ public class FloorLoader : MonoBehaviour
 
 
     private int nRow;
-    private int nColumns = 40;
+    private int nColumns = 50;
 
     private float tamFloor = 1.5f;
 
@@ -31,16 +31,27 @@ public class FloorLoader : MonoBehaviour
         {
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
+           
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
             nRow += zoneSize;
 
-            for (int i = lastZoneUpdated; i <= nRow; ++i) {
+            for (int i = lastZoneUpdated; i < nRow; ++i) {
                 for (int j = 0; j < nColumns; ++j) {
-                    if (i < 0) matrixLevel[100 + i,j] = zoneType;
-                    else matrixLevel[i,j] = zoneType;
+                    Debug.Log(i + "," + j + "," + nColumns);
+                    if (i < 0)
+                    {
+                        matrixLevel[100 + i, j] = zoneType;
+                        matrixLevel[100 + i, j].isAccesible = decorateMatrix[i - lastZoneUpdated][j];
+                    }
+                    else
+                    {
+                        matrixLevel[i, j] = zoneType;
+                        matrixLevel[i, j].isAccesible = decorateMatrix[i - lastZoneUpdated][j];
+                    }
                 }
                
             }
-
+                  
             lastZoneUpdated += zoneSize;
 
             prevZone = zoneType;
@@ -49,16 +60,23 @@ public class FloorLoader : MonoBehaviour
         return matrixLevel;
     }
 
+    private bool[][] DecorateZone(int zoneSize, int zoneType) {
+        bool[][] decorateMatrix = new bool[zoneSize][];
+        for (int i = 0; i < zoneSize; ++i)
+        {
+            decorateMatrix[i] = levelDecorator.DecorateRow(i + nRow, zoneType);
+        }
+        return decorateMatrix;
+    }
+
     private int createZone(int zoneType) {
         int zoneSize = GetRandomZoneSize(zoneType);
         if (nRow < 0) zoneSize += 4;
-
-        for (int i = 0; i < zoneSize; ++i) {
+        for (int i = 0; i < zoneSize; ++i)
+        {
             GameObject floorInstance = GetTile(zoneType, i, zoneSize);
             CreateRow(i + nRow, floorInstance);
-            levelDecorator.DecorateRow(i + nRow, zoneType);
         }
-
         return zoneSize;
 
     }
@@ -90,7 +108,7 @@ public class FloorLoader : MonoBehaviour
 
     private void CreateRow(float position, GameObject floorInstance) {
         GameObject obj;
-        for (int i = -35; i < 20; ++i) {
+        for (int i = -30; i < 20; ++i) {
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             obj.transform.parent = gameObject.transform;
         } 
