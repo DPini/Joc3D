@@ -8,15 +8,20 @@ public class GameController : MonoBehaviour {
 
     private LevelController levelController;
     private PlayerController playerController;
+    private EnemyController enemyController;
 
     // Use this for initialization
     void Start () {
         controllers = gameObject;
         levelController = controllers.GetComponent<LevelController>();
         playerController = controllers.GetComponent<PlayerController>();
+        enemyController = controllers.GetComponent<EnemyController>();
 
         levelController.Init();
         playerController.Init();
+        enemyController.Init();
+
+
 
         levelController.InitMap();
 	}
@@ -45,5 +50,8 @@ public class GameController : MonoBehaviour {
             playerController.Jump(Directions.down);
         }
         else playerController.update();
+
+        enemyController.update(Time.deltaTime);
+
     }
 }
