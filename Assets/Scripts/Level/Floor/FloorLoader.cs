@@ -17,7 +17,7 @@ public class FloorLoader : MonoBehaviour
     private float tamFloor = 1.5f;
 
     private LevelDecorator levelDecorator;
-    //private EnemyController enemyController;
+    private EnemyController enemyController;
 
     // Use this for initialization
     public Tile[,] InitializeFloor()
@@ -25,7 +25,7 @@ public class FloorLoader : MonoBehaviour
         Tile[,] matrixLevel = new Tile[100,50];
         int lastZoneUpdated = -4;
         levelDecorator = GameObject.Find("Level").GetComponent<LevelDecorator>();
-        //enemyController = GameObject.Find("Controllers").GetComponent<EnemyController>();
+        enemyController = GameObject.Find("Controllers").GetComponent<EnemyController>();
 
         nRow = -4;
         int prevZone = -1;
@@ -35,7 +35,7 @@ public class FloorLoader : MonoBehaviour
             int zoneSize = createZone(zoneType);
            
             bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
-            //enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
+            enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
             nRow += zoneSize;
 
             for (int i = lastZoneUpdated; i < nRow; ++i) {

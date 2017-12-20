@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-    GameObject enemy;
 
-    private float velocity;
+    private float velocity = 10;
 
     private float tamFloor = 1.5f;
 
-    public void Init(GameObject model, int row, int pos)
-    {
-        enemy = Instantiate(model, new Vector3(pos * tamFloor, 0.0f, row * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
-        if (row % 2 == 0)
-        {
+    void Start()
+    {   
+        Debug.Log("Enemigo Cabrón es par?: " +  (gameObject.transform.position.y / 1.5f % 2 == 0) ) ;
+        if ( ( gameObject.transform.position.z / 1.5f ) % 2 == 0 ){
             velocity *= -1;
-            enemy.transform.Rotate(0.0f, 0.0f, 180.0f);
+            gameObject.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
+        else{
+            gameObject.transform.Rotate(0.0f, -90.0f, 0.0f);
+        }   
+        
     }
 
-    public void disable()
+    void Update()
     {
-        Destroy(enemy);
+        
+        //gameObject.transform.position += new Vector3(Time.deltaTime * velocity, 0, 0);
+        float new_x = gameObject.transform.position.x + Time.deltaTime*velocity ;
+        if (new_x < -45) new_x += 50; 
+        if (new_x > 30) new_x -= 50;
+        gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
+
+        //Tiles de 1.5 van de -30 a 20 
     }
-	
-	public void update (float deltaTime) {
-        if (enemy)
-        {
-            enemy.transform.transform.position += new Vector3(deltaTime * velocity, 0, 0);
-        }
-	}
 }

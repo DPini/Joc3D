@@ -17,9 +17,9 @@ public class GameController : MonoBehaviour {
         playerController = controllers.GetComponent<PlayerController>();
         enemyController = controllers.GetComponent<EnemyController>();
 
+        enemyController.Init();
         levelController.Init();
         playerController.Init();
-        enemyController.Init();
 
 
 
