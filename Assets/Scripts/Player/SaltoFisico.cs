@@ -123,9 +123,6 @@ public class SaltoFisico : MonoBehaviour {
 
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Objeto:" + other.gameObject);
-        Debug.Log("TAG: " + other.gameObject.transform.tag);
-        Debug.Log("Player Position: " + gameObject.transform.position);
         if (other.gameObject.transform.tag == "Ground")
         {
             //transform.position = dest_pos;

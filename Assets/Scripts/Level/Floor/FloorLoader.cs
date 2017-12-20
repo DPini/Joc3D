@@ -40,7 +40,7 @@ public class FloorLoader : MonoBehaviour
 
             for (int i = lastZoneUpdated; i < nRow; ++i) {
                 for (int j = 0; j < nColumns; ++j) {
-                    Debug.Log(i + "," + j + "," + nColumns);
+                    //(i + "," + j + "," + nColumns);
                     if (i < 0)
                     {
                         matrixLevel[100 + i, j] = zoneType;

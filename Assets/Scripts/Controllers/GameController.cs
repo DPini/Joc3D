@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour {
         }
         else playerController.update();
 
-        enemyController.update(Time.deltaTime);
+        //enemyController.update(Time.deltaTime);
 
     }
 }
