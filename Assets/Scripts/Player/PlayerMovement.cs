@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 		
 	}
 
-    Vector3 direction_vector(Directions d){
+    public static Vector3 direction_vector(Directions d){
 
         Vector3 res;
         

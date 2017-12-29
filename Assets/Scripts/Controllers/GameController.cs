@@ -35,19 +35,31 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            playerController.Jump(Directions.left);
+            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
+            {
+                playerController.Jump(Directions.left);
+            }
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            playerController.Jump(Directions.right);
+            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
+            {
+                playerController.Jump(Directions.right);
+            }
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            playerController.Jump(Directions.up);
+            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
+            {
+                playerController.Jump(Directions.up);
+            }
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            playerController.Jump(Directions.down);
+            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
+            {
+                playerController.Jump(Directions.down);
+            }
         }
         else playerController.update();
 

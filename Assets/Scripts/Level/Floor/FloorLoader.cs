@@ -44,12 +44,12 @@ public class FloorLoader : MonoBehaviour
                     if (i < 0)
                     {
                         matrixLevel[100 + i, j] = zoneType;
-                        matrixLevel[100 + i, j].isAccesible = decorateMatrix[i - lastZoneUpdated][j];
+                        matrixLevel[100 + i, j].isAccesible = !decorateMatrix[i - lastZoneUpdated][j];
                     }
                     else
                     {
                         matrixLevel[i, j] = zoneType;
-                        matrixLevel[i, j].isAccesible = decorateMatrix[i - lastZoneUpdated][j];
+                        matrixLevel[i, j].isAccesible = !decorateMatrix[i - lastZoneUpdated][j];
                     }
                 }
                
