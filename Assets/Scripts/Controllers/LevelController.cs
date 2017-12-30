@@ -11,6 +11,8 @@ public class LevelController : MonoBehaviour {
     private int lastPosUpdated;
     private int loops;
 
+    private bool toUpdate = false;
+
     // Use this for initialization
     public void Init () {
         loops = 0;
@@ -30,9 +32,24 @@ public class LevelController : MonoBehaviour {
         lastPosUpdated = 50;
     }
 
+    public void ToUpdateMap() {
+        toUpdate = true;
+    }
+
     public void UpdateMap() {
         floorLoader.UpdateFloor(matrixLevel, lastPosUpdated);
-        lastPosUpdated += 25;
+        lastPosUpdated += 10;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (toUpdate) {
+            UpdateMap();
+            toUpdate = false;
+        }
+
+
     }
 
     public int GetLastPosUpdated() {

@@ -56,7 +56,7 @@ public class LevelDecorator : MonoBehaviour {
 			}
             
 			if ( putTree ) { 
-				Debug.Log(getRandomTreeInstance());
+				//Debug.Log(getRandomTreeInstance());
             	obj = Instantiate(getRandomTreeInstance(), new Vector3(i * tamFloor, 0.5f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             	obj.transform.parent = gameObject.transform;
 			}
