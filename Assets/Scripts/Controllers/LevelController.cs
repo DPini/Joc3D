@@ -38,7 +38,7 @@ public class LevelController : MonoBehaviour {
 
     public void UpdateMap() {
         floorLoader.UpdateFloor(matrixLevel, lastPosUpdated);
-        lastPosUpdated += 10;
+        lastPosUpdated += 25;
     }
 
     // Update is called once per frame

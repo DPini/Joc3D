@@ -63,7 +63,7 @@ public class FloorLoader : MonoBehaviour
         
         nRow = lastPos;
         int prevZone = matrixLevel[lastPos % 100,0].zone;
-        while (nRow <= lastPos + 10)
+        while (nRow <= lastPos + 25)
         {
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
