@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    PlayerMovement playerMovement;
+    private GameObject playerInstance;
+    private PlayerMovement playerMovement;
+    
 
     public void Init() {
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerInstance = GameObject.Find("Player");
+        playerMovement = playerInstance.GetComponent<PlayerMovement>();
     }
 
     public void Jump (Directions toMove) {
@@ -17,5 +20,12 @@ public class Player : MonoBehaviour {
     public void update()
     {
         playerMovement.Physics_update();
+    }
+
+    public Position GetPosition() {
+        Position pos;
+        pos.x = playerInstance.transform.position.x / 1.5f + 20;
+        pos.z = playerInstance.transform.position.z / 1.5f;
+        return pos;
     }
 }
