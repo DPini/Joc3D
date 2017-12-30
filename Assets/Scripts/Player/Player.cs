@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    PlayerMovement playerMovement;
-    GameObject player;
+    private GameObject playerInstance;
+    private PlayerMovement playerMovement;
 
-    public void Init() {
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        player = GameObject.Find("Player");
+
+    public void Init()
+    {
+        playerInstance = GameObject.Find("Player");
+        playerMovement = playerInstance.GetComponent<PlayerMovement>();
     }
 
     public Vector2Int getTile()
     {
-        return Utils.coordsToTile(player.transform.position);
+        return Utils.coordsToTile(playerInstance.transform.position);
     }
 
     public Vector3 getPosition()
     {
-        return player.transform.position;
+        return playerInstance.transform.position;
     }
 
     public void Jump (Directions toMove) {
@@ -29,5 +31,12 @@ public class Player : MonoBehaviour {
     public void update()
     {
         playerMovement.Physics_update();
+    }
+
+    public Position GetPosition() {
+        Position pos;
+        pos.x = playerInstance.transform.position.x / 1.5f + 20;
+        pos.z = playerInstance.transform.position.z / 1.5f;
+        return pos;
     }
 }

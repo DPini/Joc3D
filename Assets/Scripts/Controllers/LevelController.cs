@@ -8,10 +8,14 @@ public class LevelController : MonoBehaviour {
 
     private Tile[,] matrixLevel;
 
-    public int lastPosUpdated;
+    private int lastPosUpdated;
+    private int loops;
 
-	// Use this for initialization
-	public void Init () {
+    private bool toUpdate = false;
+
+    // Use this for initialization
+    public void Init () {
+        loops = 0;
         floorLoader = GameObject.Find("Level").GetComponent<FloorLoader>();
     }
 
@@ -33,6 +37,31 @@ public class LevelController : MonoBehaviour {
         //     {
         //         Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j].zone + ", " + matrixLevel[i, j].isAccesible);
         //     }
-        // }
+        // }        
+        lastPosUpdated = 50;
+    }
+
+    public void ToUpdateMap() {
+        toUpdate = true;
+    }
+
+    public void UpdateMap() {
+        floorLoader.UpdateFloor(matrixLevel, lastPosUpdated);
+        lastPosUpdated += 25;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (toUpdate) {
+            UpdateMap();
+            toUpdate = false;
+        }
+
+
+    }
+
+    public int GetLastPosUpdated() {
+        return lastPosUpdated;
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class FloorLoader : MonoBehaviour
 {
     //Floor prefabs
@@ -40,7 +39,6 @@ public class FloorLoader : MonoBehaviour
 
             for (int i = lastZoneUpdated; i < nRow; ++i) {
                 for (int j = 0; j < nColumns; ++j) {
-                    //(i + "," + j + "," + nColumns);
                     if (i < 0)
                     {
                         matrixLevel[100 + i, j] = zoneType;
@@ -62,6 +60,47 @@ public class FloorLoader : MonoBehaviour
 
         return matrixLevel;
     }
+
+    public Tile[,] UpdateFloor(Tile[,] matrixLevel, int lastPos) {    
+        int lastZoneUpdated = lastPos;
+        
+        nRow = lastPos;
+        int prevZone = matrixLevel[lastPos % 100,0].zone;
+        while (nRow <= lastPos + 25)
+        {
+            int zoneType = GetRandomeZoneInt(prevZone);
+            int zoneSize = createZone(zoneType);
+
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
+            nRow += zoneSize;
+
+            for (int i = lastZoneUpdated % 100; i < nRow % 100; ++i)
+            {
+                for (int j = 0; j < nColumns; ++j)
+                {  
+                    matrixLevel[i, j] = zoneType;
+                    matrixLevel[i, j].isAccesible = decorateMatrix[i - lastZoneUpdated % 100][j];    
+                }
+
+            }
+
+            lastZoneUpdated += zoneSize;
+
+            prevZone = zoneType;
+        }
+
+        return matrixLevel;
+    }
+    
+    /**
+    public void DestroyFloor() {
+        Transform[] objectsToDestroy = GameObject.Find("Level").GetComponentsInChildren<Transform>();
+
+        for (int i = 0; i < objectsToDestroy.Length; ++i) {
+            Destroy(objectsToDestroy[i].gameObject);
+        }
+    }
+    */
 
     private bool[][] DecorateZone(int zoneSize, int zoneType) {
         bool[][] decorateMatrix = new bool[zoneSize][];

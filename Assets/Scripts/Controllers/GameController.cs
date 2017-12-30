@@ -28,7 +28,14 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        int lastPosUpdated = levelController.GetLastPosUpdated();
+        if (playerController.GetPosition().z > lastPosUpdated - 25)
+        {
+            Debug.Log("Updating with player in: " + playerController.GetPosition().z + " with lastPos: " + lastPosUpdated);
+            levelController.ToUpdateMap();
+        }
+        
+            
 	}
 
     void FixedUpdate()
