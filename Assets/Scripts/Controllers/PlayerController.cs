@@ -17,6 +17,15 @@ public class PlayerController : MonoBehaviour {
         player.update();
     }
 
+    public Vector2Int getNextTile( Directions d )
+    {
+        Vector3 pos = player.getPosition() + PlayerMovement.direction_vector(d)*1.5f;
+
+        Vector2Int v = Utils.coordsToTile(pos);
+        Debug.Log("Next jump: " + v);
+        return v;
+    }
+
     public void Jump(Directions toMove) {
         player.Jump(toMove);
     }

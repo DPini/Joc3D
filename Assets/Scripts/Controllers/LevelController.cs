@@ -19,6 +19,16 @@ public class LevelController : MonoBehaviour {
         floorLoader = GameObject.Find("Level").GetComponent<FloorLoader>();
     }
 
+    public bool IsTileAccessible(Vector2Int tile)
+    {
+        return IsTileAccessible(tile.x, tile.y);
+    }
+
+    public bool IsTileAccessible(int row, int col)
+    {
+        return matrixLevel[row,col].isAccesible;
+    }
+
     public void InitMap() {
         matrixLevel = floorLoader.InitializeFloor();
 
@@ -27,8 +37,7 @@ public class LevelController : MonoBehaviour {
         //     {
         //         Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j].zone + ", " + matrixLevel[i, j].isAccesible);
         //     }
-        // }
-        
+        // }        
         lastPosUpdated = 50;
     }
 

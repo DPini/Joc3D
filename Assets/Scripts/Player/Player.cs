@@ -6,11 +6,22 @@ public class Player : MonoBehaviour {
 
     private GameObject playerInstance;
     private PlayerMovement playerMovement;
-    
 
-    public void Init() {
+
+    public void Init()
+    {
         playerInstance = GameObject.Find("Player");
         playerMovement = playerInstance.GetComponent<PlayerMovement>();
+    }
+
+    public Vector2Int getTile()
+    {
+        return Utils.coordsToTile(playerInstance.transform.position);
+    }
+
+    public Vector3 getPosition()
+    {
+        return playerInstance.transform.position;
     }
 
     public void Jump (Directions toMove) {
