@@ -20,4 +20,9 @@ public class PlayerController : MonoBehaviour {
     public void Jump(Directions toMove) {
         player.Jump(toMove);
     }
+
+    public Position GetPosition() {
+        return player.GetPosition();
+        
+    }
 }

@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour {
             dest_pos = transform.position + direction_vector(d) * jump_dist;
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
-            Debug.Log("Vi = " + Vi);
             float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
             float Vx = Vi * Mathf.Cos(Mathf.Deg2Rad * jump_angle);
 
