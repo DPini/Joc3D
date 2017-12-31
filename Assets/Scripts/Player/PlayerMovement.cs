@@ -114,7 +114,6 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     void OnTriggerEnter(Collider other){
-        Debug.Log("Collision: " + other.transform.tag);
         if ( state == states.jumping ){
             if (other.transform.tag == "Ground")
             {
