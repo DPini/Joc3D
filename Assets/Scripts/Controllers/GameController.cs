@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     private LevelController levelController;
     private PlayerController playerController;
     private EnemyController enemyController;
+    private ScoreController scoreController;
 
     // Use this for initialization
     void Start () {
@@ -16,10 +17,13 @@ public class GameController : MonoBehaviour {
         levelController = controllers.GetComponent<LevelController>();
         playerController = controllers.GetComponent<PlayerController>();
         enemyController = controllers.GetComponent<EnemyController>();
+        scoreController = controllers.GetComponent<ScoreController>();
+
 
         enemyController.Init();
         levelController.Init();
         playerController.Init();
+        scoreController.Init();
 
 
 
@@ -34,7 +38,8 @@ public class GameController : MonoBehaviour {
             Debug.Log("Updating with player in: " + playerController.GetPosition().z + " with lastPos: " + lastPosUpdated);
             levelController.ToUpdateMap();
         }
-        
+
+        scoreController.updateScore(playerController.GetPosition());
             
 	}
 
