@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -10,6 +11,10 @@ public class GameController : MonoBehaviour {
     private PlayerController playerController;
     private EnemyController enemyController;
     private ScoreController scoreController;
+    private GameMenuController gameMenuController;
+
+    enum GameStates { Playing, Died };
+    private GameStates gameState;
 
     // Use this for initialization
     void Start () {
@@ -18,17 +23,27 @@ public class GameController : MonoBehaviour {
         playerController = controllers.GetComponent<PlayerController>();
         enemyController = controllers.GetComponent<EnemyController>();
         scoreController = controllers.GetComponent<ScoreController>();
+        gameMenuController = controllers.GetComponent<GameMenuController>();
 
 
-        enemyController.Init();
         levelController.Init();
+        enemyController.Init();
         playerController.Init();
         scoreController.Init();
+        gameMenuController.Init();
+
 
 
 
         levelController.InitMap();
+
+        gameState = GameStates.Playing;
 	}
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene("FirstScene");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -45,37 +60,52 @@ public class GameController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (gameState == GameStates.Playing)
         {
-            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
+
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
-                playerController.Jump(Directions.left);
+                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
+                {
+                    playerController.Jump(Directions.left);
+                }
             }
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
+            else if (Input.GetKey(KeyCode.RightArrow))
             {
-                playerController.Jump(Directions.right);
+                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
+                {
+                    playerController.Jump(Directions.right);
+                }
             }
-        }
-        else if (Input.GetKey(KeyCode.UpArrow))
-        {
-            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
-                playerController.Jump(Directions.up);
+                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
+                {
+                    playerController.Jump(Directions.up);
+                }
             }
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
+            else if (Input.GetKey(KeyCode.DownArrow))
             {
-                playerController.Jump(Directions.down);
+                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
+                {
+                    playerController.Jump(Directions.down);
+                }
             }
+            else playerController.update();
         }
-        else playerController.update();
 
         //enemyController.update(Time.deltaTime);
 
+    }
+
+    public void endGame()
+    {
+        gameMenuController.showMenu();
+        gameState = GameStates.Died;
+    }
+
+    public void exitGame()
+    {
+        Application.Quit();
     }
 }

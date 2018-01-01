@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerEnemyCollision : MonoBehaviour {
 
     private float TimeToReset = 0;
+    private GameController gameController;
     Color origColor;
 
 	// Use this for initialization
 	void Start () {
         origColor = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
+        gameController = GameObject.Find("Controllers").GetComponent<GameController>();
     }
 	
 	// Update is called once per frame
@@ -34,6 +36,7 @@ public class PlayerEnemyCollision : MonoBehaviour {
         {
             gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             TimeToReset = 3.0f;
+            gameController.endGame();
         }
     }
 }
