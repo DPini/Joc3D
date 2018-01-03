@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     private EnemyController enemyController;
     private ScoreController scoreController;
     private GameMenuController gameMenuController;
+    private InputController inputController;
 
     enum GameStates { Playing, Died };
     private GameStates gameState;
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour {
         enemyController = controllers.GetComponent<EnemyController>();
         scoreController = controllers.GetComponent<ScoreController>();
         gameMenuController = controllers.GetComponent<GameMenuController>();
+        inputController = controllers.GetComponent<InputController>();
 
 
         levelController.Init();
@@ -63,28 +65,28 @@ public class GameController : MonoBehaviour {
         if (gameState == GameStates.Playing)
         {
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (inputController.checkInput(KeyCode.LeftArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
                 {
                     playerController.Jump(Directions.left);
                 }
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (inputController.checkInput(KeyCode.RightArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
                 {
                     playerController.Jump(Directions.right);
                 }
             }
-            else if (Input.GetKey(KeyCode.UpArrow))
+            else if (inputController.checkInput(KeyCode.UpArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
                 {
                     playerController.Jump(Directions.up);
                 }
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (inputController.checkInput(KeyCode.DownArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
                 {
