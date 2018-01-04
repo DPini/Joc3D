@@ -64,4 +64,24 @@ public class LevelController : MonoBehaviour {
     public int GetLastPosUpdated() {
         return lastPosUpdated;
     }
+
+    public void AddPhysics()
+    {
+        //foreach (Transform t in GameObject.Find("Level").transform)
+        foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Ground"))
+        {
+            Rigidbody rb = gameObj.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = false;
+        }
+
+        foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Decoration"))
+        {
+            Rigidbody rb = gameObj.AddComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = false;
+            gameObject.AddComponent<BoxCollider>();
+        }
+
+    }
 }

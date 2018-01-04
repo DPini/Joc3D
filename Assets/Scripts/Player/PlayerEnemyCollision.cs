@@ -36,6 +36,24 @@ public class PlayerEnemyCollision : MonoBehaviour {
         {
             gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             TimeToReset = 3.0f;
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            Vector3 dir = other.transform.position - transform.position;
+            rb.velocity = -dir*5;
+
+            MeshCollider mc = gameObject.GetComponent<MeshCollider>();
+            mc.isTrigger = false;
+            
+            other.gameObject.GetComponent<Enemy>().setVelocity(0);
+            Rigidbody rb_other = other.gameObject.AddComponent<Rigidbody>();
+            rb_other.mass = 400;
+            Vector3 dir_other = dir;
+            dir.Scale(new Vector3(1, 0, 1));
+            rb_other.useGravity = false;
+            rb_other.velocity = dir * 5;
+            
+
             gameController.endGame();
         }
     }

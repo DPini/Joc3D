@@ -103,6 +103,8 @@ public class GameController : MonoBehaviour {
     public void endGame()
     {
         gameMenuController.showMenu();
+        enemyController.AddPhysics();
+        levelController.AddPhysics();
         gameState = GameStates.Died;
     }
 

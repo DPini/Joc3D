@@ -22,6 +22,11 @@ public class Enemy : MonoBehaviour {
         
     }
 
+    public void setVelocity(float velocity)
+    {
+        this.velocity = velocity;
+    }
+
     void Update()
     {
         

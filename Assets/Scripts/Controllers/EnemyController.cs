@@ -74,5 +74,21 @@ public class EnemyController : MonoBehaviour {
 
     }
 
+    public void AddPhysics()
+    {
+        for ( int row = 0; row < maxRows; ++row)
+        {
+            for ( int enemy = 0; enemy < maxEnemiesPerRow; ++enemy)
+            {
+                if (enemies[row, enemy])
+                {
+                    GameObject e = enemies[row, enemy];
+                    e.AddComponent<Rigidbody>();
+                    e.GetComponent<Enemy>().setVelocity(0);
+                }
+            }
+        }
+    }
+
 
 }

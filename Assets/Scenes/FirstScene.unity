@@ -1158,9 +1158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trees:
-  - {fileID: 100002, guid: 77f2596ea80aeb14c93a546f7d2da549, type: 3}
-  - {fileID: 100002, guid: e1c1726c50a38724f826ab572d474a48, type: 3}
-  - {fileID: 100002, guid: f17acadd865c1b240a503ce53c1fbfa0, type: 3}
+  - {fileID: 1415961620026526, guid: 2f1625b30a78df94fa72ccc9836cc3e5, type: 2}
+  - {fileID: 1553499474158928, guid: 7e780cbf9b87ff5479a42b225853e81e, type: 2}
+  - {fileID: 1191992049429674, guid: aa889ee3f92aea749a3e7530fdf5fd11, type: 2}
   mediumTreeInstance: {fileID: 0}
   bigTreeInstance: {fileID: 0}
 --- !u!1 &1364316342
@@ -1220,7 +1220,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1364316342}
   serializedVersion: 2
-  m_Mass: 0.0000001
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
