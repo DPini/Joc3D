@@ -13,10 +13,11 @@ public class Enemy : MonoBehaviour {
     {   
         if ( ( gameObject.transform.position.z / 1.5f ) % 2 == 0 ){
             velocity *= -1;
-            gameObject.transform.Rotate(0.0f, 90.0f, 0.0f);
+            //gameObject.transform.Rotate(0.0f, 90.0f, 0.0f);
         }
         else{
-            gameObject.transform.Rotate(0.0f, -90.0f, 0.0f);
+            //gameObject.transform.Rotate(0.0f, -90.0f, 0.0f);
+            gameObject.transform.Rotate(0.0f, 180.0f, 0.0f);
         }   
         
     }

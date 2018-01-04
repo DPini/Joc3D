@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour {
     public int maxEnemiesPerRow = 40;
     public int maxRows = 30;
 
-    public GameObject model;
+    public GameObject[] models;
 
     private int lastCreatedEnemy;
 
@@ -59,7 +59,10 @@ public class EnemyController : MonoBehaviour {
         {
             if ( i <= n) {
                 lastPos += Random.Range(1.5f, 6.0f);
-                enemies[row, i] = Instantiate(model, new Vector3(lastPos, 0.0f, pos * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
+                GameObject model = models[Random.Range(0, models.Length)];
+                float height = 0.0f;
+                if (model.name == "Bus") height = 0.15f;
+                enemies[row, i] = Instantiate(model, new Vector3(lastPos, height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             }
             else
             {
