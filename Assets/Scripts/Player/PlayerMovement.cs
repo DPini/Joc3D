@@ -28,13 +28,24 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 dest_pos;
     private float angular_velocity;
     private float player_scale_step;
-    
+
+    private bool inPlatform = false;
+
 
 
     // Use this for initialization
     void Start () {
 		
 	}
+
+    private void Update()
+    { 
+        if (inPlatform) {
+            Debug.Log("i'm in platform!");
+            float new_x = gameObject.transform.position.x + Time.deltaTime * 5.0f;
+            gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+    }
 
     public static Vector3 direction_vector(Directions d){
 
@@ -93,6 +104,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
             state = states.jumping;
+            inPlatform = false;
             direction = d;
         }
 
@@ -116,7 +128,7 @@ public class PlayerMovement : MonoBehaviour {
     void OnTriggerEnter(Collider other){
         Debug.Log("Collision: " + other.transform.tag);
         if ( state == states.jumping ){
-            if (other.transform.tag == "Ground")
+            if (other.transform.tag.Contains("Ground"))
             {
                 velocity = Vector3.zero;
                 angular_velocity = 0;
@@ -126,6 +138,9 @@ public class PlayerMovement : MonoBehaviour {
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
 
                 state = states.idle;
+
+                inPlatform = other.transform.tag.Contains("Platform");
+                
             }
         }
     }
