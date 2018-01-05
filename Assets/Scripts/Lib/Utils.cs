@@ -12,4 +12,16 @@ public class Utils : MonoBehaviour {
         return new Vector2Int(row,col);
     }
 
+    public static T GetComponentAddIfNotExists<T>(GameObject gameObj) where T: Component
+    {
+        T c;
+        if (gameObj.GetComponent<T>() != null)
+        {
+            c = gameObj.GetComponent<T>();
+        }
+        else c = gameObj.AddComponent<T>();
+
+        return c;
+    } 
+
 }

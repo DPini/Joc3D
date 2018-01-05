@@ -46,7 +46,7 @@ public class PlayerEnemyCollision : MonoBehaviour {
             mc.isTrigger = false;
             
             other.gameObject.GetComponent<Enemy>().setVelocity(0);
-            Rigidbody rb_other = other.gameObject.AddComponent<Rigidbody>();
+            Rigidbody rb_other = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObject);
             rb_other.mass = 400;
             Vector3 dir_other = dir;
             dir.Scale(new Vector3(1, 0, 1));

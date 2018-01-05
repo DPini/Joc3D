@@ -70,17 +70,21 @@ public class LevelController : MonoBehaviour {
         //foreach (Transform t in GameObject.Find("Level").transform)
         foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Ground"))
         {
-            Rigidbody rb = gameObj.GetComponent<Rigidbody>();
+            Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
             rb.isKinematic = false;
             rb.useGravity = false;
         }
 
         foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Decoration"))
         {
-            Rigidbody rb = gameObj.AddComponent<Rigidbody>();
+            Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
             rb.isKinematic = false;
-            rb.useGravity = false;
+            rb.useGravity = true;
+            rb.mass = 0.02f;
             gameObject.AddComponent<BoxCollider>();
+            BoxCollider boxc = Utils.GetComponentAddIfNotExists<BoxCollider>(gameObj);
+            boxc.enabled = true;
+
         }
 
     }

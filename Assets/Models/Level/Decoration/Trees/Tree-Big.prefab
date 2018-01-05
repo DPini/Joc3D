@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4444538040500410}
+  - component: {fileID: 65727079154354616}
   m_Layer: 0
   m_Name: Tree-Big
   m_TagString: Decoration
@@ -111,3 +112,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1442304375841406}
   m_Mesh: {fileID: 4300000, guid: f17acadd865c1b240a503ce53c1fbfa0, type: 3}
+--- !u!65 &65727079154354616
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1191992049429674}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 1.25, z: 0.7}
+  m_Center: {x: 0, y: 0.6, z: 0}

@@ -76,6 +76,7 @@ public class EnemyController : MonoBehaviour {
 
     public void AddPhysics()
     {
+        /*
         for ( int row = 0; row < maxRows; ++row)
         {
             for ( int enemy = 0; enemy < maxEnemiesPerRow; ++enemy)
@@ -88,6 +89,16 @@ public class EnemyController : MonoBehaviour {
                 }
             }
         }
+        */
+
+        foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            //gameObj.AddComponent<Rigidbody>();
+            Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
+            gameObj.GetComponent<BoxCollider>().isTrigger = false;
+            gameObj.GetComponent<Enemy>().setVelocity(0);
+        }
+
     }
 
 
