@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour {
 
-    private float speed = 5.0f;
+    private float speed;
 
     // 1 -> right
     // -1 -> left
@@ -24,6 +24,16 @@ public class Platform : MonoBehaviour {
     public float GetDirection()
     {
         return direction;
+    }
+
+    public void SetSpeed(float platformSpeed)
+    {
+        speed = platformSpeed;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 
     // Update is called once per frame

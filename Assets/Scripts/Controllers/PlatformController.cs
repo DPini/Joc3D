@@ -17,10 +17,14 @@ public class PlatformController : MonoBehaviour {
 	public void CreatePlatformRow (int pos) {
         int row = pos % maxRows;
         float tamPlatform = Random.Range(2, 4);
+
         float speed = Random.Range(40, 60) / 10.0f;
+
         int direction = Random.Range(0, 2);
         if (direction == 0) direction = -1;
+
         GameObject platformTmp;
+
         for (int i = 0; i < 6; ++i)
         {
             Destroy(platforms[row, i]);
@@ -28,6 +32,7 @@ public class PlatformController : MonoBehaviour {
 
             Platform platformSettings = platformTmp.GetComponent<Platform>();
             platformSettings.SetDirection(direction);
+            platformSettings.SetSpeed(speed);
 
             platformTmp.transform.localScale = new Vector3(tamPlatform / 10.0f, 0.15f, 0.2f);
             platforms[row, i] = platformTmp;
