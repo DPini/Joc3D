@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour {
     private float player_scale_step;
 
     private bool inPlatform = false;
+    private float platformDirection;
 
 
 
@@ -41,8 +42,7 @@ public class PlayerMovement : MonoBehaviour {
     private void Update()
     { 
         if (inPlatform) {
-            Debug.Log("i'm in platform!");
-            float new_x = gameObject.transform.position.x + Time.deltaTime * 5.0f;
+            float new_x = gameObject.transform.position.x + Time.deltaTime * 5.0f * platformDirection;
             gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
     }
@@ -139,7 +139,12 @@ public class PlayerMovement : MonoBehaviour {
 
                 state = states.idle;
 
-                inPlatform = other.transform.tag.Contains("Platform");
+                if (other.transform.tag.Contains("Platform")) {
+                    inPlatform = true;
+                    Platform platform = other.gameObject.GetComponent<Platform>();
+                    platformDirection = platform.GetDirection();
+                }
+
                 
             }
         }

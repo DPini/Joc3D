@@ -21,6 +21,11 @@ public class Platform : MonoBehaviour {
         direction = toDirection;
     }
 
+    public float GetDirection()
+    {
+        return direction;
+    }
+
     // Update is called once per frame
     void Update () {
         float new_x = gameObject.transform.position.x + Time.deltaTime * speed * direction ;
