@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114880412650794446}
   m_Layer: 0
   m_Name: platform
-  m_TagString: Ground
+  m_TagString: PlatformGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,3 +152,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638532b5e52f3343a9e45a8afec3817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: 0
