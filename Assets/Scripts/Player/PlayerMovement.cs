@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool inPlatform = false;
     private float platformDirection;
+    private float platformSpeed;
 
 
 
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
     private void Update()
     { 
         if (inPlatform) {
-            float new_x = gameObject.transform.position.x + Time.deltaTime * 5.0f * platformDirection;
+            float new_x = gameObject.transform.position.x + Time.deltaTime * platformSpeed * platformDirection;
             gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
     }
@@ -143,9 +144,10 @@ public class PlayerMovement : MonoBehaviour {
                     inPlatform = true;
                     Platform platform = other.gameObject.GetComponent<Platform>();
                     platformDirection = platform.GetDirection();
+                    platformSpeed = platform.GetSpeed();
                 }
 
-                
+
             }
         }
     }
