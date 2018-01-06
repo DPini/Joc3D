@@ -19,14 +19,22 @@ public class GameMenuController : MonoBehaviour {
 
 	}
 
-    public void showMenu()
+    public void showMenu( bool b )
     {
-        if (!isMenuShown)
+        if (isMenuShown != b)
         {
-            deadPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
-            isMenuShown = true;
+            deadPanel.SetActive(b);
+            isMenuShown = b;
         }
+        if (b)
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
+        else
+            EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public bool IsMenuActive()
+    {
+        return isMenuShown;
     }
 
     public void RestartGameHandler()
