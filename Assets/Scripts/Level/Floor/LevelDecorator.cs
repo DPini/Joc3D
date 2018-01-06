@@ -52,7 +52,8 @@ public class LevelDecorator : MonoBehaviour {
         for (int i = -30; i < 20; ++i) { 
 			bool putTree = true;
 			if ( !(i == -10 || i == 10) ){
-				if ( Random.Range(0, ( Mathf.Abs(i) < 3 ? 150 : 100 )) > 50 ) putTree = false;
+                if (Mathf.Abs(position) < 2 && Mathf.Abs(i) < 2) putTree = false;
+                else if (Random.Range(0, (Mathf.Abs(i) < 3 ? 150 : 100)) > 50) putTree = false;
 			}
             
 			if ( putTree ) { 
