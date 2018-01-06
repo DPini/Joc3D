@@ -17,6 +17,7 @@ public class FloorLoader : MonoBehaviour
 
     private LevelDecorator levelDecorator;
     private EnemyController enemyController;
+    private PlatformController platformController;
 
     // Use this for initialization
     public Tile[,] InitializeFloor()
@@ -25,6 +26,9 @@ public class FloorLoader : MonoBehaviour
         int lastZoneUpdated = -4;
         levelDecorator = GameObject.Find("Level").GetComponent<LevelDecorator>();
         enemyController = GameObject.Find("Controllers").GetComponent<EnemyController>();
+        platformController = GameObject.Find("Controllers").GetComponent<PlatformController>();
+        platformController.Init();
+
 
         nRow = -4;
         int prevZone = -1;
@@ -117,7 +121,7 @@ public class FloorLoader : MonoBehaviour
         for (int i = 0; i < zoneSize; ++i)
         {
             GameObject floorInstance = GetTile(zoneType, i, zoneSize);
-            CreateRow(i + nRow, floorInstance);
+            CreateRow(i + nRow, floorInstance, zoneType);
         }
         return zoneSize;
 
@@ -130,6 +134,9 @@ public class FloorLoader : MonoBehaviour
             case 1: //road
                 size = Random.Range(1, 6);
                 break;
+            case 2: //river
+                size = Random.Range(1, 4);
+                break;
             default: //safe-zone
                 size = Random.Range(1, 3);
                 break;
@@ -140,20 +147,30 @@ public class FloorLoader : MonoBehaviour
     private int GetRandomeZoneInt(int prevZone)
     {
         if (prevZone == -1) return 0;
-        int rnd = Random.Range(0, 2);
+        int rnd = Random.Range(0, 3);
         while (rnd == prevZone)
         {
-            rnd = Random.Range(0, 2);
+            rnd = Random.Range(0, 3);
         }
         return rnd;
     }
 
-    private void CreateRow(float position, GameObject floorInstance) {
+    private void CreateRow(float position, GameObject floorInstance, int zoneType) {
         GameObject obj;
         for (int i = -30; i < 20; ++i) {
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             obj.transform.parent = gameObject.transform;
-        } 
+        }
+
+        switch (zoneType) {
+            case 1:
+                break;
+            case 2:
+                platformController.CreatePlatformRow((int)position);
+                break;
+            case 3:
+                break;
+        }
     }
 
     private GameObject GetTile(int tile, int pos, int zoneSize) {
@@ -163,6 +180,9 @@ public class FloorLoader : MonoBehaviour
                 //if(pos == 0)
                 //if(pos == zoneSize - 1)
                 ret = roadFloorInstance[0];
+                break;
+            case 2:
+                ret = riverFloorInstance[0];
                 break;
             default:
                 if(pos % 2 == 0) ret = safeFloorInstance[1];

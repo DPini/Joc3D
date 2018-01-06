@@ -31,7 +31,9 @@ public class LevelDecorator : MonoBehaviour {
 			//Road
 			case 1:
 				break;
-
+            //River
+            case 2:
+                break;
 			//safe Zone
 			default:
                 row = DecorateGrassFloor(i);
