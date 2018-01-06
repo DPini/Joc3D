@@ -29,6 +29,15 @@ public class LevelController : MonoBehaviour {
         return matrixLevel[row,col].isAccesible;
     }
 
+    public int GetNextZoneTile(Vector2Int tile) {
+        return GetNextZoneTile(tile.x, tile.y);
+    }
+
+    public int GetNextZoneTile(int row, int col)
+    {
+        return matrixLevel[row, col].zone;
+    }
+
     public void InitMap() {
         matrixLevel = floorLoader.InitializeFloor();
 

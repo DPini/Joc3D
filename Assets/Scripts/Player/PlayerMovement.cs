@@ -94,7 +94,8 @@ public class PlayerMovement : MonoBehaviour {
         return Vector3.SignedAngle(direction_vector(direction), direction_vector(d), Vector3.up );
     }
 
-    public void Jump(Directions d){
+    public void Jump(Directions d, int nextZone)
+    {
 
         // Based on: https://vilbeyli.github.io/Simple-Trajectory-Motion-Example-Unity3D/
 
@@ -105,6 +106,8 @@ public class PlayerMovement : MonoBehaviour {
         else {
 
             dest_pos = transform.position + direction_vector(d) * jump_dist;
+            if (nextZone == 1) dest_pos = new Vector3(dest_pos.x, 0.3f, dest_pos.z);
+            else dest_pos = new Vector3(dest_pos.x, 0.4f, dest_pos.z);
             float desv = CalcDesviation(dest_pos.x);
             Debug.Log("Desviación: " + desv);
             dest_pos.x += desv;

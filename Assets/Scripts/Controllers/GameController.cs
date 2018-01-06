@@ -69,28 +69,28 @@ public class GameController : MonoBehaviour {
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
                 {
-                    playerController.Jump(Directions.left);
+                    playerController.Jump(Directions.left, levelController.GetNextZoneTile(playerController.getNextTile(Directions.left)));
                 }
             }
             else if (inputController.checkInput(KeyCode.RightArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
                 {
-                    playerController.Jump(Directions.right);
+                    playerController.Jump(Directions.right, levelController.GetNextZoneTile(playerController.getNextTile(Directions.right)));
                 }
             }
             else if (inputController.checkInput(KeyCode.UpArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
                 {
-                    playerController.Jump(Directions.up);
+                    playerController.Jump(Directions.up, levelController.GetNextZoneTile(playerController.getNextTile(Directions.up)));
                 }
             }
             else if (inputController.checkInput(KeyCode.DownArrow))
             {
                 if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
                 {
-                    playerController.Jump(Directions.down);
+                    playerController.Jump(Directions.down, levelController.GetNextZoneTile(playerController.getNextTile(Directions.down)));
                 }
             }
             playerController.update();

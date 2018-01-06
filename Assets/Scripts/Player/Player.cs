@@ -24,8 +24,8 @@ public class Player : MonoBehaviour {
         return playerInstance.transform.position;
     }
 
-    public void Jump (Directions toMove) {
-        playerMovement.Jump(toMove);
+    public void Jump (Directions toMove, int nextZone) {
+        playerMovement.Jump(toMove, nextZone);
 	}
 
     public void update()

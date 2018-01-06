@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour {
         return v;
     }
 
-    public void Jump(Directions toMove) {
-        player.Jump(toMove);
+    public void Jump(Directions toMove, int nextZone) {
+        player.Jump(toMove, nextZone);
     }
 
     public Position GetPosition() {
