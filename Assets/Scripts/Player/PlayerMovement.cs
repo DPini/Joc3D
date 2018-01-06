@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour {
     private float CalcDesviation( float position ) { 
         Debug.Log("dest x pos: " + position);
         Debug.Log("Modulo :" + position % 1.5f);
-        float desviation = Mathf.Abs(position % 1.5f);
+        float desviation = (position % 1.5f) + 1.5f % 1.5f;
         if (desviation != 0)
         {
             if (desviation < (1.5f - desviation))
