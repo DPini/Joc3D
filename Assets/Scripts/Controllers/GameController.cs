@@ -115,6 +115,7 @@ public class GameController : MonoBehaviour {
     public void endGame()
     {
         gameMenuController.showMenu(true);
+        playerController.killPlayer();
         enemyController.AddPhysics();
         levelController.AddPhysics();
         gameState = GameStates.Died;

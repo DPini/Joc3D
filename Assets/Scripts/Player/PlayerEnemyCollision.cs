@@ -56,5 +56,11 @@ public class PlayerEnemyCollision : MonoBehaviour {
 
             gameController.endGame();
         }
+        else if ( other.transform.tag == "Water")
+        {
+            gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            TimeToReset = 3.0f;
+            gameController.endGame();
+        }
     }
 }
