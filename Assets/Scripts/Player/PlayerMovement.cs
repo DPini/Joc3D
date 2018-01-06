@@ -32,13 +32,24 @@ public class PlayerMovement : MonoBehaviour {
     private bool inPlatform = false;
     private float platformDirection;
     private float platformSpeed;
+    private float desv_compensation;
 
 
 
     // Use this for initialization
     void Start () {
-		
-	}
+        Debug.Log("####Testing CalcDesv#####");
+        CalcDesviation(0);
+        CalcDesviation(1);
+        CalcDesviation(1.5f);
+        CalcDesviation(1.6f);
+        CalcDesviation(2);
+        CalcDesviation(2.5f);
+
+        Debug.Log("####Testing CalcDesv#####");
+
+
+    }
 
     
     private void Update()
@@ -95,7 +106,9 @@ public class PlayerMovement : MonoBehaviour {
         else {
 
             dest_pos = transform.position + direction_vector(d) * jump_dist;
-            CalcDesviation();
+            float desv = CalcDesviation(dest_pos.x);
+            Debug.Log("Desviación: " + desv);
+            dest_pos.x += desv;
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
             float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
@@ -106,6 +119,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
             angular_velocity = calc_jump_rotation(d) / jump_time;
+            desv_compensation = desv / jump_time;
+
 
             velocity = (Vx * direction_vector(d)) + new Vector3(0.0f, Vy, 0.0f);
 
@@ -117,23 +132,24 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
-    private float CalcDesviation() { 
-        Debug.Log("dest x pos: " + dest_pos.x);
-        Debug.Log("Modulo :" + dest_pos.x % 1.5f);
-        float desviation = Mathf.Abs(dest_pos.x % 1.5f);
-        if (desviation != 0) { 
-        
-            if (desviation < 1.5f - desviation)
+    private float CalcDesviation( float position ) { 
+        Debug.Log("dest x pos: " + position);
+        Debug.Log("Modulo :" + position % 1.5f);
+        float desviation = Mathf.Abs(position % 1.5f);
+        if (desviation != 0)
+        {
+            if (desviation < (1.5f - desviation))
             {
+                Debug.Log("Desviación: " + -desviation);
                 return -desviation;
             }
             else
             {
-                return desviation;
+                Debug.Log("Desviación: " + (1.5f - desviation));
+                return 1.5f - desviation;
             }
         }
-
-        dest_pos.x += desviation;
+        Debug.Log("Desviación: " + desviation);
         return 0.0f;
     }
     
@@ -141,8 +157,10 @@ public class PlayerMovement : MonoBehaviour {
         if ( state == states.jumping ) { 
             //jump_time_count += Time.deltaTime;
             velocity.y -= gravity * Time.deltaTime;
+            /*
             if(direction == Directions.up || direction == Directions.down)
             {
+                
                 float desviation = CalcDesviation();
                 if (desviation != 0.0f)
                 {
@@ -160,9 +178,11 @@ public class PlayerMovement : MonoBehaviour {
                     }
                 }
             }
+            */
             
             gameObject.transform.position += velocity * Time.deltaTime;
             gameObject.transform.Rotate(0, angular_velocity * Time.deltaTime, 0);
+            gameObject.transform.position += new Vector3 (desv_compensation*Time.deltaTime,0,0);
             transform.localScale += new Vector3(
                 0.0f,
                 ( transform.localScale.y <= jump_player_scale ? player_scale_step : -player_scale_step ) * Time.deltaTime,
@@ -182,6 +202,7 @@ public class PlayerMovement : MonoBehaviour {
                 transform.localScale = new Vector3(1,1,1);
                 // Place player in precise position.
                 transform.position = dest_pos;
+                Debug.Log("Aterrizando en: " + transform.position.x);
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
 
                 state = states.idle;
