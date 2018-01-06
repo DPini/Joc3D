@@ -40,13 +40,16 @@ public class PlayerMovement : MonoBehaviour {
 		
 	}
 
+    
     private void Update()
     { 
         if (inPlatform) {
+            Debug.Log("playerMovementupdate");
             float new_x = gameObject.transform.position.x + Time.deltaTime * platformSpeed * platformDirection;
             gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
     }
+    
 
     public static Vector3 direction_vector(Directions d){
 
@@ -87,9 +90,12 @@ public class PlayerMovement : MonoBehaviour {
         if (state == states.jumping || state == states.falling)
         {
             Physics_update();
+            inPlatform = false;
         }
         else {
+
             dest_pos = transform.position + direction_vector(d) * jump_dist;
+            CalcDesviation();
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
             float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
@@ -110,11 +116,51 @@ public class PlayerMovement : MonoBehaviour {
         }
 
     }
+
+    private float CalcDesviation() { 
+        Debug.Log("dest x pos: " + dest_pos.x);
+        Debug.Log("Modulo :" + dest_pos.x % 1.5f);
+        float desviation = Mathf.Abs(dest_pos.x % 1.5f);
+        if (desviation != 0) { 
+        
+            if (desviation < 1.5f - desviation)
+            {
+                return -desviation;
+            }
+            else
+            {
+                return desviation;
+            }
+        }
+
+        dest_pos.x += desviation;
+        return 0.0f;
+    }
     
-    public void Physics_update(){
-        if ( state == states.jumping ){
+    public void Physics_update() { 
+        if ( state == states.jumping ) { 
             //jump_time_count += Time.deltaTime;
             velocity.y -= gravity * Time.deltaTime;
+            if(direction == Directions.up || direction == Directions.down)
+            {
+                float desviation = CalcDesviation();
+                if (desviation != 0.0f)
+                {
+                    Debug.Log("Desviation :" + desviation);
+                    if (Mathf.Abs(desviation) < 0.4f) velocity.x += desviation;
+                    else if (desviation < 0.0f)
+                    {
+                        Debug.Log("Moving left with Desviation: " + desviation);
+                        velocity.x -= 0.4f;
+                    }
+                    else
+                    {
+                        Debug.Log("Moving right with Desviation: " + desviation);
+                        velocity.x += 0.4f;
+                    }
+                }
+            }
+            
             gameObject.transform.position += velocity * Time.deltaTime;
             gameObject.transform.Rotate(0, angular_velocity * Time.deltaTime, 0);
             transform.localScale += new Vector3(
@@ -127,7 +173,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     
     void OnTriggerEnter(Collider other){
-        Debug.Log("Collision: " + other.transform.tag);
+        //Debug.Log("Collision: " + other.transform.tag);
         if ( state == states.jumping ){
             if (other.transform.tag.Contains("Ground"))
             {

@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour {
 
     void Start()
     {   
-        Debug.Log("Enemigo Cabrón es par?: " +  (gameObject.transform.position.y / 1.5f % 2 == 0) ) ;
+       // Debug.Log("Enemigo Cabrón es par?: " +  (gameObject.transform.position.y / 1.5f % 2 == 0) ) ;
         if ( ( gameObject.transform.position.z / 1.5f ) % 2 == 0 ){
             velocity *= -1;
             gameObject.transform.Rotate(0.0f, 90.0f, 0.0f);
