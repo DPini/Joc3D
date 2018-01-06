@@ -56,7 +56,10 @@ public class GameController : MonoBehaviour {
             levelController.ToUpdateMap();
         }
 
+        if ( gameState == GameStates.Playing)
+        {
         scoreController.updateScore(playerController.GetPosition());
+        }
             
 	}
 
