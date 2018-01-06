@@ -54,10 +54,24 @@ public class PlayerMovement : MonoBehaviour {
     
     private void Update()
     { 
-        if (inPlatform) {
-            Debug.Log("playerMovementupdate");
+        if (inPlatform) { 
             float new_x = gameObject.transform.position.x + Time.deltaTime * platformSpeed * platformDirection;
-            gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
+            float new_y = gameObject.transform.position.y;
+            if (new_x < -9.0f)
+            {
+                dest_pos = transform.position;
+                new_x += 0.2f;
+                new_y += 0.2f;
+                state = states.jumping;
+            }
+            if (new_x > 5.0f)
+            {
+                dest_pos = transform.position;
+                new_x -= 0.2f;
+                new_y += 0.2f;
+                state = states.jumping;
+            }
+            gameObject.transform.position = new Vector3(new_x, new_y, gameObject.transform.position.z);
         }
     }
     
