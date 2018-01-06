@@ -100,7 +100,6 @@ public class PlayerMovement : MonoBehaviour {
 
         if (state == states.jumping || state == states.falling)
         {
-            Physics_update();
             inPlatform = false;
         }
         else {

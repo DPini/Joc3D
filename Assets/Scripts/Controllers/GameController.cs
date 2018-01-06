@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour {
                     playerController.Jump(Directions.down);
                 }
             }
-            else playerController.update();
+            playerController.update();
         }
 
         //enemyController.update(Time.deltaTime);
