@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour {
                 new_x += 0.2f;
                 new_y += 0.2f;
                 state = states.jumping;
+                inPlatform = false;
             }
             if (new_x > 5.0f)
             {
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour {
                 new_x -= 0.2f;
                 new_y += 0.2f;
                 state = states.jumping;
+                inPlatform = false;
             }
             gameObject.transform.position = new Vector3(new_x, new_y, gameObject.transform.position.z);
         }

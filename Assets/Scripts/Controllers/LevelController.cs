@@ -26,7 +26,7 @@ public class LevelController : MonoBehaviour {
 
     public bool IsTileAccessible(int row, int col)
     {
-        if (matrixLevel[row, col].isAccesible) return col > 22 && col < 34;
+        if (matrixLevel[row, col].isAccesible) return col > 23 && col < 34;
         else return false;
         
     }
