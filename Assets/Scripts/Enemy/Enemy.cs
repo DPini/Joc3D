@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
         
         //gameObject.transform.position += new Vector3(Time.deltaTime * velocity, 0, 0);
         float new_x = gameObject.transform.position.x + Time.deltaTime*velocity ;
-        if (new_x < -45) new_x += 50; 
+        if (new_x < -45) new_x += 55; 
         if (new_x > 30) new_x -= 50;
         gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
 
