@@ -28,13 +28,39 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 dest_pos;
     private float angular_velocity;
     private float player_scale_step;
-    
+
+    private bool inPlatform = false;
+    private float platformDirection;
+    private float platformSpeed;
+    private float desv_compensation;
+
 
 
     // Use this for initialization
     void Start () {
-		
-	}
+        Debug.Log("####Testing CalcDesv#####");
+        CalcDesviation(0);
+        CalcDesviation(1);
+        CalcDesviation(1.5f);
+        CalcDesviation(1.6f);
+        CalcDesviation(2);
+        CalcDesviation(2.5f);
+
+        Debug.Log("####Testing CalcDesv#####");
+
+
+    }
+
+    
+    private void Update()
+    { 
+        if (inPlatform) {
+            Debug.Log("playerMovementupdate");
+            float new_x = gameObject.transform.position.x + Time.deltaTime * platformSpeed * platformDirection;
+            gameObject.transform.position = new Vector3(new_x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+    }
+    
 
     public static Vector3 direction_vector(Directions d){
 
@@ -75,9 +101,14 @@ public class PlayerMovement : MonoBehaviour {
         if (state == states.jumping || state == states.falling)
         {
             Physics_update();
+            inPlatform = false;
         }
         else {
+
             dest_pos = transform.position + direction_vector(d) * jump_dist;
+            float desv = CalcDesviation(dest_pos.x);
+            Debug.Log("Desviación: " + desv);
+            dest_pos.x += desv;
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
             float Vy = Vi * Mathf.Sin(Mathf.Deg2Rad * jump_angle);
@@ -88,22 +119,70 @@ public class PlayerMovement : MonoBehaviour {
 
 
             angular_velocity = calc_jump_rotation(d) / jump_time;
+            desv_compensation = desv / jump_time;
+
 
             velocity = (Vx * direction_vector(d)) + new Vector3(0.0f, Vy, 0.0f);
 
 
             state = states.jumping;
+            inPlatform = false;
             direction = d;
         }
 
     }
+
+    private float CalcDesviation( float position ) { 
+        Debug.Log("dest x pos: " + position);
+        Debug.Log("Modulo :" + position % 1.5f);
+        float desviation = (position % 1.5f) + 1.5f % 1.5f;
+        if (desviation != 0)
+        {
+            if (desviation < (1.5f - desviation))
+            {
+                Debug.Log("Desviación: " + -desviation);
+                return -desviation;
+            }
+            else
+            {
+                Debug.Log("Desviación: " + (1.5f - desviation));
+                return 1.5f - desviation;
+            }
+        }
+        Debug.Log("Desviación: " + desviation);
+        return 0.0f;
+    }
     
-    public void Physics_update(){
-        if ( state == states.jumping ){
+    public void Physics_update() { 
+        if ( state == states.jumping ) { 
             //jump_time_count += Time.deltaTime;
             velocity.y -= gravity * Time.deltaTime;
+            /*
+            if(direction == Directions.up || direction == Directions.down)
+            {
+                
+                float desviation = CalcDesviation();
+                if (desviation != 0.0f)
+                {
+                    Debug.Log("Desviation :" + desviation);
+                    if (Mathf.Abs(desviation) < 0.4f) velocity.x += desviation;
+                    else if (desviation < 0.0f)
+                    {
+                        Debug.Log("Moving left with Desviation: " + desviation);
+                        velocity.x -= 0.4f;
+                    }
+                    else
+                    {
+                        Debug.Log("Moving right with Desviation: " + desviation);
+                        velocity.x += 0.4f;
+                    }
+                }
+            }
+            */
+            
             gameObject.transform.position += velocity * Time.deltaTime;
             gameObject.transform.Rotate(0, angular_velocity * Time.deltaTime, 0);
+            gameObject.transform.position += new Vector3 (desv_compensation*Time.deltaTime,0,0);
             transform.localScale += new Vector3(
                 0.0f,
                 ( transform.localScale.y <= jump_player_scale ? player_scale_step : -player_scale_step ) * Time.deltaTime,
@@ -115,16 +194,26 @@ public class PlayerMovement : MonoBehaviour {
     
     void OnTriggerEnter(Collider other){
         if ( state == states.jumping ){
-            if (other.transform.tag == "Ground")
+            if (other.transform.tag.Contains("Ground"))
             {
                 velocity = Vector3.zero;
                 angular_velocity = 0;
                 transform.localScale = new Vector3(1,1,1);
                 // Place player in precise position.
                 transform.position = dest_pos;
+                Debug.Log("Aterrizando en: " + transform.position.x);
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
 
                 state = states.idle;
+
+                if (other.transform.tag.Contains("Platform")) {
+                    inPlatform = true;
+                    Platform platform = other.gameObject.GetComponent<Platform>();
+                    platformDirection = platform.GetDirection();
+                    platformSpeed = platform.GetSpeed();
+                }
+
+
             }
         }
     }
