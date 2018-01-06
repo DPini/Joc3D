@@ -9,12 +9,29 @@ public class PlatformController : MonoBehaviour {
     private int maxRows = 50;
     private GameObject[,] platforms;
 
+    private Platform sinkedPlatform;
+
 	public void Init () {
         platforms = new GameObject[maxRows, 6];
 	}
-	
-	// This function only is called if the position is a river
-	public void CreatePlatformRow (int pos) {
+
+    public void SinkPlatform(Platform platform) {
+        UnSinkPlatform();
+        platform.SinkPlatform();
+        sinkedPlatform = platform;
+    }
+
+    public void UnSinkPlatform()
+    {
+        if (sinkedPlatform != null)
+        {
+            sinkedPlatform.UnSinkPlatform();
+            sinkedPlatform = null;
+        }
+    }
+
+    // This function only is called if the position is a river
+    public void CreatePlatformRow (int pos) {
         int row = pos % maxRows;
         float tamPlatform = Random.Range(2, 4);
 

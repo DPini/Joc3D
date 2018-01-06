@@ -34,10 +34,13 @@ public class PlayerMovement : MonoBehaviour {
     private float platformSpeed;
     private float desv_compensation;
 
+    private PlatformController platformController;
+
 
 
     // Use this for initialization
     void Start () {
+        platformController = GameObject.Find("Controllers").GetComponent<PlatformController>();
         Debug.Log("####Testing CalcDesv#####");
         CalcDesviation(0);
         CalcDesviation(1);
@@ -120,6 +123,8 @@ public class PlayerMovement : MonoBehaviour {
             inPlatform = false;
         }
         else {
+
+            platformController.UnSinkPlatform();
 
             dest_pos = transform.position + direction_vector(d) * jump_dist;
             if (nextZone == 1) dest_pos = new Vector3(dest_pos.x, 0.3f, dest_pos.z);
@@ -229,6 +234,8 @@ public class PlayerMovement : MonoBehaviour {
                     Platform platform = other.gameObject.GetComponent<Platform>();
                     platformDirection = platform.GetDirection();
                     platformSpeed = platform.GetSpeed();
+
+                    platformController.SinkPlatform(platform);
                 }
 
 

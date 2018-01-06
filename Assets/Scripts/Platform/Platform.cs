@@ -5,6 +5,7 @@ using UnityEngine;
 public class Platform : MonoBehaviour {
 
     private float speed;
+    private bool isSinking = false;
 
     // 1 -> right
     // -1 -> left
@@ -34,6 +35,15 @@ public class Platform : MonoBehaviour {
     public float GetSpeed()
     {
         return speed;
+    }
+
+    public void SinkPlatform() {
+        gameObject.transform.position -= new Vector3 (0.0f, 0.05f, 0.0f);
+    }
+
+    public void UnSinkPlatform()
+    {
+        gameObject.transform.position += new Vector3(0.0f, 0.05f, 0.0f);
     }
 
     // Update is called once per frame
