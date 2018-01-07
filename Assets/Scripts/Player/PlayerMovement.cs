@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour {
             if (nextZone == 1) dest_pos = new Vector3(dest_pos.x, 0.3f, dest_pos.z);
             else dest_pos = new Vector3(dest_pos.x, 0.4f, dest_pos.z);
             float desv = CalcDesviation(dest_pos.x);
-            Debug.Log("Desviación: " + desv);
+            //Debug.Log("Desviación: " + desv);
             dest_pos.x += desv;
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
@@ -163,23 +163,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private float CalcDesviation( float position ) { 
-        Debug.Log("dest x pos: " + position);
-        Debug.Log("Modulo :" + position % 1.5f);
+        //Debug.Log("dest x pos: " + position);
+        //Debug.Log("Modulo :" + position % 1.5f);
         float desviation = (position % 1.5f) + 1.5f % 1.5f;
         if (desviation != 0)
         {
             if (desviation < (1.5f - desviation))
             {
-                Debug.Log("Desviación: " + -desviation);
+                //Debug.Log("Desviación: " + -desviation);
                 return -desviation;
             }
             else
             {
-                Debug.Log("Desviación: " + (1.5f - desviation));
+                //Debug.Log("Desviación: " + (1.5f - desviation));
                 return 1.5f - desviation;
             }
         }
-        Debug.Log("Desviación: " + desviation);
+        //Debug.Log("Desviación: " + desviation);
         return 0.0f;
     }
     
@@ -231,7 +231,7 @@ public class PlayerMovement : MonoBehaviour {
                 transform.localScale = new Vector3(1,1,1);
                 // Place player in precise position.
                 transform.position = dest_pos;
-                Debug.Log("Aterrizando en: " + transform.position.x);
+                //Debug.Log("Aterrizando en: " + transform.position.x);
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
 
                 state = states.idle;
