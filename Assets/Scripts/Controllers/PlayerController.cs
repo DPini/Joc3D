@@ -19,6 +19,16 @@ public class PlayerController : MonoBehaviour {
         player.killPlayer();
     }
 
+    public void setGodMode(bool b)
+    {
+        player.setGodMode(b);
+    }
+
+    public bool getGodMode()
+    {
+        return player.getGodMode();
+    }
+
     public void update()
     {
         player.update();

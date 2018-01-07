@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private states state = states.idle;
 
+    private bool godMode;
+
     public float speed = 5.0f;
 
     public float jump_dist = 1.5f;
@@ -42,17 +44,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start () {
         platformController = GameObject.Find("Controllers").GetComponent<PlatformController>();
 
-        Debug.Log("####Testing CalcDesv#####");
-        CalcDesviation(0);
-        CalcDesviation(1);
-        CalcDesviation(1.5f);
-        CalcDesviation(1.6f);
-        CalcDesviation(2);
-        CalcDesviation(2.5f);
-
-        Debug.Log("####Testing CalcDesv#####");
-
         audioController = GameObject.Find("Music").GetComponent<AudioController>();
+        godMode = false;
 
 
     }
@@ -60,6 +53,11 @@ public class PlayerMovement : MonoBehaviour {
     public void killPlayer()
     {
         state = states.died;
+    }
+
+    public void setGodMode(bool b)
+    {
+        godMode = b;
     }
 
     
@@ -226,7 +224,7 @@ public class PlayerMovement : MonoBehaviour {
     
     void OnTriggerEnter(Collider other){
         if ( state == states.jumping ){
-            if (other.transform.tag.Contains("Ground"))
+            if (other.transform.tag.Contains("Ground") || godMode && other.transform.tag.Contains("Water") )
             {
                 velocity = Vector3.zero;
                 angular_velocity = 0;
