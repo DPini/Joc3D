@@ -852,8 +852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47be80e65b95e664ab4e36d0be1b4380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemiesPerRow: 10
-  maxRows: 30
+  maxEnemiesPerRow: 15
+  maxRows: 60
   models:
   - {fileID: 1977796281193266, guid: c03d7a141f014664fa3e50871bc681a8, type: 2}
 --- !u!114 &1052474534

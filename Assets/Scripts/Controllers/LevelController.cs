@@ -26,6 +26,7 @@ public class LevelController : MonoBehaviour {
 
     public bool IsTileAccessible(int row, int col)
     {
+        row = ((row % 100) + 100 ) % 100;
         if (matrixLevel[row, col].isAccesible) return col > 23 && col < 34;
         else return false;
         
@@ -37,6 +38,7 @@ public class LevelController : MonoBehaviour {
 
     public int GetNextZoneTile(int row, int col)
     {
+        row = ((row % 100) + 100) % 100;
         return matrixLevel[row, col].zone;
     }
 

@@ -76,6 +76,7 @@ public class FloorLoader : MonoBehaviour
             int zoneSize = createZone(zoneType);
 
             bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
+            enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
             nRow += zoneSize;
 
             for (int i = lastZoneUpdated % 100; i < nRow % 100; ++i)
@@ -83,7 +84,7 @@ public class FloorLoader : MonoBehaviour
                 for (int j = 0; j < nColumns; ++j)
                 {  
                     matrixLevel[i, j] = zoneType;
-                    matrixLevel[i, j].isAccesible = decorateMatrix[i - lastZoneUpdated % 100][j];    
+                    matrixLevel[i, j].isAccesible = !decorateMatrix[i - lastZoneUpdated % 100][j];    
                 }
 
             }
