@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour {
     
     public int maxEnemiesPerRow = 15;
-    public int maxRows = 60;
+    public int maxRows = 75;
 
     public GameObject[] models;
 
@@ -33,6 +33,10 @@ public class EnemyController : MonoBehaviour {
                 }
                 break;
             default:
+                for (int i = nRow; i < nRow + zoneSize; ++i)
+                {
+                    deleteEnemies(i);
+                }
                 break;
         }
     }
@@ -54,8 +58,12 @@ public class EnemyController : MonoBehaviour {
                 enemies[row, i] = Instantiate(model, new Vector3(lastPos, height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             }
         }
+    }
 
-        
+    void deleteEnemies(int row)
+    {
+        row = ((row % maxRows) + maxRows) % maxRows;
+        for (int i = 0; i < maxEnemiesPerRow; ++i) Destroy(enemies[row, i]);
 
     }
 

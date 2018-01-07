@@ -6,7 +6,7 @@ public class PlatformController : MonoBehaviour {
 
     public GameObject platformModel;
 
-    private int maxRows = 50;
+    private int maxRows = 75;
     private GameObject[,] platforms;
 
     private AudioController audioController;

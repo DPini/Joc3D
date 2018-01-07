@@ -20,7 +20,7 @@ public class FloorLoader : MonoBehaviour
     private PlatformController platformController;
 
     // Use this for initialization
-    public Tile[,] InitializeFloor()
+    public Tile[,] InitializeFloor(out int lastPosUpdated)
     {
         Tile[,] matrixLevel = new Tile[100,50];
         int lastZoneUpdated = -4;
@@ -61,11 +61,11 @@ public class FloorLoader : MonoBehaviour
 
             prevZone = zoneType;
         }
-
+        lastPosUpdated = lastZoneUpdated;
         return matrixLevel;
     }
 
-    public Tile[,] UpdateFloor(Tile[,] matrixLevel, int lastPos) {    
+    public int UpdateFloor(Tile[,] matrixLevel, int lastPos) {    
         int lastZoneUpdated = lastPos;
         
         nRow = lastPos;
@@ -94,7 +94,7 @@ public class FloorLoader : MonoBehaviour
             prevZone = zoneType;
         }
 
-        return matrixLevel;
+        return lastZoneUpdated;
     }
     
     /**
