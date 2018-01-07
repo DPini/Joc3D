@@ -24,7 +24,7 @@ public class LevelDecorator : MonoBehaviour {
 		// Do nothing	
 	}
 
-	public bool[] DecorateRow( int i , int zoneType ){
+	public bool[] DecorateRow( int i , int zoneType, int freeRow ){
         bool[] row = new bool[50];
         switch (zoneType)
 		{	
@@ -36,7 +36,7 @@ public class LevelDecorator : MonoBehaviour {
                 break;
 			//safe Zone
 			default:
-                row = DecorateGrassFloor(i);
+                row = DecorateGrassFloor(i, freeRow);
 				break;
 		}
         return row;
@@ -47,16 +47,18 @@ public class LevelDecorator : MonoBehaviour {
 		return trees[Random.Range(0,trees.Length)];
 	}
 
-	private bool[] DecorateGrassFloor( int position ){
+	private bool[] DecorateGrassFloor( int position, int freeRow ){
         bool[] row = new bool[50];
 
         GameObject obj;
         for (int i = -30; i < 20; ++i) { 
 			bool putTree = true;
-			if ( !(i == -10 || i == 10) ){
+			if ( !(i == -7 || i == 4) ){
                 if (Mathf.Abs(position) < 2 && Mathf.Abs(i) < 2) putTree = false;
                 else if (Random.Range(0, (Mathf.Abs(i) < 3 ? 150 : 100)) > 50) putTree = false;
-			}
+                else if (position == freeRow) putTree = false;
+
+            }
             
 			if ( putTree ) { 
             	obj = Instantiate(getRandomTreeInstance(), new Vector3(i * tamFloor, 0.5f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
