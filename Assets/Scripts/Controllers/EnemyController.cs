@@ -34,14 +34,14 @@ public class EnemyController : MonoBehaviour {
     //     }
     // }
 
-    public void createEnemiesZone( int nRow, int zoneSize, int zoneType )
+    public void createEnemiesZone( int nRow, int zoneSize, int zoneType, int level )
     {
         switch (zoneType)
         {
             case 1:
                 for ( int i = nRow; i < nRow + zoneSize ; ++i)
                 {
-                    createEnemies(i);
+                    createEnemies(i, level);
                 }
                 break;
             default:
@@ -49,20 +49,24 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    void createEnemies( int pos )
+    void createEnemies( int pos, int level )
     {
         int n = Random.Range(0, maxEnemiesPerRow);
         int row = ((pos % maxRows) + maxRows) % maxRows;
+
+        GameObject model = models[Random.Range(models.Length / 2 * level, models.Length / 2 * level + 2)];
 
         float lastPos = 1.5f;
         for ( int i = 0; i < maxEnemiesPerRow; ++i)
         {
             if ( i <= n) {
-                lastPos += Random.Range(1.5f, 6.0f);
-                GameObject model = models[Random.Range(0, models.Length)];
+                lastPos += Random.Range(4.5f, 9.0f);
+                
                 float height = 0.0f;
                 if (model.name == "Bus") height = 0.15f;
-                enemies[row, i] = Instantiate(model, new Vector3(lastPos, height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
+                
+                enemies[row, i] = Instantiate(model, new Vector3(lastPos, height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI , 0.0f, 0.0f)) as GameObject;
+                if (model.name != "Bus") enemies[row, i].transform.Rotate(0.0f, 90.0f, 0.0f);
             }
             else
             {

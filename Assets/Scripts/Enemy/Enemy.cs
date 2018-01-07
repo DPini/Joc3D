@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 
-    private float velocity = 5;
+    private float velocity = 6.5f;
 
     private float tamFloor = 1.5f;
 

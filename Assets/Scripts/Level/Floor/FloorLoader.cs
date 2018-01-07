@@ -42,7 +42,7 @@ public class FloorLoader : MonoBehaviour
             int zoneSize = createZone(zoneType);
            
             bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level);
-            enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
+            enemyController.createEnemiesZone(nRow, zoneSize, zoneType, level);
             nRow += zoneSize;
 
             for (int i = lastZoneUpdated; i < nRow; ++i) {
