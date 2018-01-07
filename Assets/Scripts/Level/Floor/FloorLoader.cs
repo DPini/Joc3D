@@ -24,7 +24,7 @@ public class FloorLoader : MonoBehaviour
     // Use this for initialization
     public Tile[,] InitializeFloor()
     {
-        level = 1;
+        level = 0;
 
         Tile[,] matrixLevel = new Tile[100,50];
         int lastZoneUpdated = -4;
@@ -138,13 +138,14 @@ public class FloorLoader : MonoBehaviour
         int size;
         switch (type) { 
             case 1: //road
-                size = Random.Range(1, 6);
+                size = Random.Range(1, 3 + level);
                 break;
             case 2: //river
-                size = Random.Range(1, 4);
+                size = Random.Range(1, 2);
+                if (level == 2) ++size;
                 break;
             default: //safe-zone
-                size = Random.Range(1, 3);
+                size = Random.Range(1, 2 + (2 - level));
                 break;
         }
         return size;
@@ -153,6 +154,7 @@ public class FloorLoader : MonoBehaviour
     private int GetRandomeZoneInt(int prevZone)
     {
         if (prevZone == -1) return 0;
+        if (prevZone == 2 && level < 2) return 0;
         int rnd = Random.Range(0, 3);
         while (rnd == prevZone)
         {

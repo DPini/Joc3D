@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
     
-    public int maxEnemiesPerRow = 40;
+    public int maxEnemiesPerRow = 4;
     public int maxRows = 30;
 
     public GameObject[] models;
@@ -56,17 +56,18 @@ public class EnemyController : MonoBehaviour {
 
         GameObject model = models[Random.Range(models.Length / 2 * level, models.Length / 2 * level + 2)];
 
-        float lastPos = 1.5f;
+        float distanceEnemies = Random.Range(3.0f, 5.0f);
+
+        float initSequence = Random.Range(-8.0f, 0.0f);
         for ( int i = 0; i < maxEnemiesPerRow; ++i)
         {
             if ( i <= n) {
-                lastPos += Random.Range(4.5f, 9.0f);
                 
                 float height = 0.0f;
                 if (model.name == "Bus") height = 0.15f;
                 
-                enemies[row, i] = Instantiate(model, new Vector3(lastPos, height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI , 0.0f, 0.0f)) as GameObject;
-                if (model.name != "Bus") enemies[row, i].transform.Rotate(0.0f, 90.0f, 0.0f);
+                enemies[row, i] = Instantiate(model, new Vector3(initSequence + (distanceEnemies * (tamFloor * 1.5f) * i), height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI , 0.0f, 0.0f)) as GameObject;
+                if (model.name != "Bus") enemies[row, i].transform.Rotate(0.0f, -90.0f, 0.0f);
             }
             else
             {

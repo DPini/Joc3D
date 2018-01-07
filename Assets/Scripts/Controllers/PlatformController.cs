@@ -41,7 +41,7 @@ public class PlatformController : MonoBehaviour {
         int row = pos % maxRows;
         float tamPlatform = Random.Range(2, 4);
 
-        float speed = Random.Range(40, 60) / 10.0f;
+        float speed = Random.Range(40, 55) / 10.0f;
 
         int direction = Random.Range(0, 2);
         if (direction == 0) direction = -1;
