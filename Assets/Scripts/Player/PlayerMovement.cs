@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private states state = states.idle;
 
+    private bool godMode;
+
     public float speed = 5.0f;
 
     public float jump_dist = 1.5f;
@@ -42,17 +44,8 @@ public class PlayerMovement : MonoBehaviour {
     void Start () {
         platformController = GameObject.Find("Controllers").GetComponent<PlatformController>();
 
-        Debug.Log("####Testing CalcDesv#####");
-        CalcDesviation(0);
-        CalcDesviation(1);
-        CalcDesviation(1.5f);
-        CalcDesviation(1.6f);
-        CalcDesviation(2);
-        CalcDesviation(2.5f);
-
-        Debug.Log("####Testing CalcDesv#####");
-
         audioController = GameObject.Find("Music").GetComponent<AudioController>();
+        godMode = false;
 
 
     }
@@ -60,6 +53,11 @@ public class PlayerMovement : MonoBehaviour {
     public void killPlayer()
     {
         state = states.died;
+    }
+
+    public void setGodMode(bool b)
+    {
+        godMode = b;
     }
 
     
@@ -137,7 +135,7 @@ public class PlayerMovement : MonoBehaviour {
             if (nextZone == 1) dest_pos = new Vector3(dest_pos.x, 0.3f, dest_pos.z);
             else dest_pos = new Vector3(dest_pos.x, 0.4f, dest_pos.z);
             float desv = CalcDesviation(dest_pos.x);
-            Debug.Log("Desviación: " + desv);
+            //Debug.Log("Desviación: " + desv);
             dest_pos.x += desv;
 
             float Vi = Mathf.Sqrt(jump_dist * gravity / (Mathf.Sin(Mathf.Deg2Rad * jump_angle * 2)));
@@ -163,23 +161,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private float CalcDesviation( float position ) { 
-        Debug.Log("dest x pos: " + position);
-        Debug.Log("Modulo :" + position % 1.5f);
+        //Debug.Log("dest x pos: " + position);
+        //Debug.Log("Modulo :" + position % 1.5f);
         float desviation = (position % 1.5f) + 1.5f % 1.5f;
         if (desviation != 0)
         {
             if (desviation < (1.5f - desviation))
             {
-                Debug.Log("Desviación: " + -desviation);
+                //Debug.Log("Desviación: " + -desviation);
                 return -desviation;
             }
             else
             {
-                Debug.Log("Desviación: " + (1.5f - desviation));
+                //Debug.Log("Desviación: " + (1.5f - desviation));
                 return 1.5f - desviation;
             }
         }
-        Debug.Log("Desviación: " + desviation);
+        //Debug.Log("Desviación: " + desviation);
         return 0.0f;
     }
     
@@ -224,14 +222,14 @@ public class PlayerMovement : MonoBehaviour {
     
     void OnTriggerEnter(Collider other){
         if ( state == states.jumping ){
-            if (other.transform.tag.Contains("Ground"))
+            if (other.transform.tag.Contains("Ground") || godMode && other.transform.tag.Contains("Water") )
             {
                 velocity = Vector3.zero;
                 angular_velocity = 0;
                 transform.localScale = new Vector3(1,1,1);
                 // Place player in precise position.
                 transform.position = dest_pos;
-                Debug.Log("Aterrizando en: " + transform.position.x);
+                //Debug.Log("Aterrizando en: " + transform.position.x);
                 transform.rotation = Quaternion.LookRotation(direction_vector(direction));
 
                 state = states.idle;

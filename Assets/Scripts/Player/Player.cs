@@ -6,17 +6,43 @@ public class Player : MonoBehaviour {
 
     private GameObject playerInstance;
     private PlayerMovement playerMovement;
+    private PlayerEnemyCollision playerEnemyCollision;
+    Color origColor;
+    private bool godMode;
 
 
     public void Init()
     {
         playerInstance = GameObject.Find("Player");
         playerMovement = playerInstance.GetComponent<PlayerMovement>();
+        playerEnemyCollision = playerInstance.GetComponent<PlayerEnemyCollision>();
+        origColor = playerInstance.GetComponentInChildren<MeshRenderer>().material.color;
+        godMode = false;
     }
 
     public void killPlayer()
     {
         playerMovement.killPlayer();
+    }
+
+    public void setGodMode(bool b)
+    {
+        godMode = b;
+        playerMovement.setGodMode(godMode);
+        playerEnemyCollision.setGodMode(godMode);
+        if (godMode)
+        {
+            playerInstance.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+        }
+        else
+        {
+            playerInstance.GetComponentInChildren<MeshRenderer>().material.color = origColor;
+        }
+    }
+
+    public bool getGodMode()
+    {
+        return godMode;
     }
 
     public Vector2Int getTile()

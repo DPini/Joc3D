@@ -105,6 +105,11 @@ public class GameController : MonoBehaviour {
                 gameMenuController.showMenu(!gameMenuController.IsMenuActive());
             }
 
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyUp(KeyCode.G))
+            {
+                playerController.setGodMode(!playerController.getGodMode());
+            }
+
         }
 
         //enemyController.update(Time.deltaTime);

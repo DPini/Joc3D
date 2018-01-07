@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
     
+
     public int maxEnemiesPerRow = 4;
-    public int maxRows = 30;
+    public int maxRows = 75;
 
     public GameObject[] models;
 
@@ -22,17 +23,6 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
-    // public void update(float deltaTime)
-    // {
-    //     for ( int row = 0; row < maxRows; ++row)
-    //     {
-    //         for ( int enemy = 0; enemy < maxEnemiesPerRow; ++enemy)
-    //         {
-    //             if (enemies[row,enemy])
-    //             enemies[row,enemy].update(deltaTime);
-    //         }
-    //     }
-    // }
 
     public void createEnemiesZone( int nRow, int zoneSize, int zoneType, int level )
     {
@@ -45,14 +35,18 @@ public class EnemyController : MonoBehaviour {
                 }
                 break;
             default:
+                for (int i = nRow; i < nRow + zoneSize; ++i)
+                {
+                    deleteEnemies(i);
+                }
                 break;
         }
     }
 
     void createEnemies( int pos, int level )
     {
-        int n = Random.Range(0, maxEnemiesPerRow);
         int row = ((pos % maxRows) + maxRows) % maxRows;
+        int n = Random.Range(2, maxEnemiesPerRow);
 
         GameObject model = models[Random.Range(models.Length / 2 * level, models.Length / 2 * level + 2)];
 
@@ -61,21 +55,21 @@ public class EnemyController : MonoBehaviour {
         float initSequence = Random.Range(-8.0f, 0.0f);
         for ( int i = 0; i < maxEnemiesPerRow; ++i)
         {
-            if ( i <= n) {
-                
+            Destroy(enemies[row, i]);
+            if ( i <= n ) {
                 float height = 0.0f;
                 if (model.name == "Bus") height = 0.15f;
                 
                 enemies[row, i] = Instantiate(model, new Vector3(initSequence + (distanceEnemies * (tamFloor * 1.5f) * i), height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI , 0.0f, 0.0f)) as GameObject;
                 if (model.name != "Bus") enemies[row, i].transform.Rotate(0.0f, -90.0f, 0.0f);
             }
-            else
-            {
-                Destroy(enemies[row, i]);
-            }
         }
+    }
 
-        
+    void deleteEnemies(int row)
+    {
+        row = ((row % maxRows) + maxRows) % maxRows;
+        for (int i = 0; i < maxEnemiesPerRow; ++i) Destroy(enemies[row, i]);
 
     }
 
