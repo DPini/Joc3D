@@ -74,17 +74,23 @@ public class FloorLoader : MonoBehaviour
         {
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
+            //Debug.Log("Created zone starting in " + nRow + "with size" + zoneSize);
 
             bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
             enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
             nRow += zoneSize;
-
-            for (int i = lastZoneUpdated % 100; i < nRow % 100; ++i)
+            //Debug.Log("Lastzone: " + lastZoneUpdated + " nRow: " + nRow);
+            //Debug.Log("For de " + lastZoneUpdated % 100 + " a " + nRow % 100);
+            //for (int i = lastZoneUpdated % 100; i < nRow % 100; ++i)
+            for ( int i = 0; i < zoneSize; ++i)
             {
+                int row = (lastZoneUpdated + i) % 100;
                 for (int j = 0; j < nColumns; ++j)
                 {  
-                    matrixLevel[i, j] = zoneType;
-                    matrixLevel[i, j].isAccesible = !decorateMatrix[i - lastZoneUpdated % 100][j];    
+                    matrixLevel[row, j] = zoneType;
+                    //Debug.Log("i: " + i + " j: " + j + "i - lastZoneUpdated %100: " + (i - lastZoneUpdated % 100) );
+                    //matrixLevel[i, j].isAccesible = !decorateMatrix[i - lastZoneUpdated % 100][j];    
+                    matrixLevel[row, j].isAccesible = !decorateMatrix[i][j];
                 }
 
             }
@@ -159,6 +165,9 @@ public class FloorLoader : MonoBehaviour
     private void CreateRow(float position, GameObject floorInstance, int zoneType) {
         GameObject obj;
         for (int i = -30; i < 20; ++i) {
+            Vector3 pos = new Vector3(i * tamFloor, 3.0f, position * tamFloor);
+            if (Physics.Raycast(pos, Vector3.down, 10))
+                Debug.Log("WE HAVE A VERY BIG PROBLEM. DOUBLE TILE BUG. POSITION: " + pos);
             obj = Instantiate(floorInstance, new Vector3(i * tamFloor, 0.0f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
             obj.transform.parent = gameObject.transform;
         }
