@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 
    
 
-    private enum states { idle, jumping, falling };
+    private enum states { idle, jumping, falling, died };
 
     private states state = states.idle;
 
@@ -55,6 +55,11 @@ public class PlayerMovement : MonoBehaviour {
         audioController = GameObject.Find("Music").GetComponent<AudioController>();
 
 
+    }
+
+    public void killPlayer()
+    {
+        state = states.died;
     }
 
     

@@ -21,15 +21,25 @@ public class GameMenuController : MonoBehaviour {
 
     }
 
-    public void showMenu()
+    public void showMenu( bool b )
     {
-        if (!isMenuShown)
-        { 
-            deadPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
-            isMenuShown = true;
-            audioController.EnterMenu();
+        if (isMenuShown != b)
+        {
+            deadPanel.SetActive(b);
+            isMenuShown = b;
         }
+        if (b) 
+	{
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
+            audioController.EnterMenu();
+	}
+        else
+            EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public bool IsMenuActive()
+    {
+        return isMenuShown;
     }
 
     public void RestartGameHandler()
@@ -47,8 +57,4 @@ public class GameMenuController : MonoBehaviour {
         gameController.exitGame();
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

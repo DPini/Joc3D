@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour {
     void createEnemies( int pos )
     {
         int n = Random.Range(0, maxEnemiesPerRow);
-        int row = pos % maxRows;
+        int row = ((pos % maxRows) + maxRows) % maxRows;
 
         float lastPos = 1.5f;
         for ( int i = 0; i < maxEnemiesPerRow; ++i)

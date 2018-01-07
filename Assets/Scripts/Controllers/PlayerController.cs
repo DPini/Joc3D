@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour {
         player.Init();
 	}
 
+    public void killPlayer()
+    {
+        player.killPlayer();
+    }
+
     public void update()
     {
         player.update();

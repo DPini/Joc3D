@@ -56,7 +56,10 @@ public class GameController : MonoBehaviour {
             levelController.ToUpdateMap();
         }
 
+        if ( gameState == GameStates.Playing)
+        {
         scoreController.updateScore(playerController.GetPosition());
+        }
             
 	}
 
@@ -65,46 +68,59 @@ public class GameController : MonoBehaviour {
         if (gameState == GameStates.Playing)
         {
 
-            if (inputController.checkInput(KeyCode.LeftArrow))
+            if (!gameMenuController.IsMenuActive())
             {
-                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
+                if (inputController.checkInput(KeyCode.LeftArrow))
                 {
-                    playerController.Jump(Directions.left, levelController.GetNextZoneTile(playerController.getNextTile(Directions.left)));
+                    if (levelController.IsTileAccessible(playerController.getNextTile(Directions.left)))
+                    {
+                        playerController.Jump(Directions.left, levelController.GetNextZoneTile(playerController.getNextTile(Directions.left)));
+                    }
                 }
-            }
-            else if (inputController.checkInput(KeyCode.RightArrow))
-            {
-                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
+                else if (inputController.checkInput(KeyCode.RightArrow))
                 {
-                    playerController.Jump(Directions.right, levelController.GetNextZoneTile(playerController.getNextTile(Directions.right)));
+                    if (levelController.IsTileAccessible(playerController.getNextTile(Directions.right)))
+                    {
+                        playerController.Jump(Directions.right, levelController.GetNextZoneTile(playerController.getNextTile(Directions.right)));
+                    }
                 }
-            }
-            else if (inputController.checkInput(KeyCode.UpArrow))
-            {
-                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
+                else if (inputController.checkInput(KeyCode.UpArrow))
                 {
-                    playerController.Jump(Directions.up, levelController.GetNextZoneTile(playerController.getNextTile(Directions.up)));
+                    if (levelController.IsTileAccessible(playerController.getNextTile(Directions.up)))
+                    {
+                        playerController.Jump(Directions.up, levelController.GetNextZoneTile(playerController.getNextTile(Directions.up)));
+                    }
                 }
-            }
-            else if (inputController.checkInput(KeyCode.DownArrow))
-            {
-                if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
+                else if (inputController.checkInput(KeyCode.DownArrow))
                 {
-                    playerController.Jump(Directions.down, levelController.GetNextZoneTile(playerController.getNextTile(Directions.down)));
+                    if (levelController.IsTileAccessible(playerController.getNextTile(Directions.down)))
+                    {
+                        playerController.Jump(Directions.down, levelController.GetNextZoneTile(playerController.getNextTile(Directions.down)));
+                    }
                 }
             }
             playerController.update();
+
+            if ( Input.GetKeyUp(KeyCode.Escape) ){
+                gameMenuController.showMenu(!gameMenuController.IsMenuActive());
+            }
+
         }
 
         //enemyController.update(Time.deltaTime);
 
+
     }
 
-    public void endGame()
+    public void endGame(bool AddEnvironmentPhysics = false)
     {
-        gameMenuController.showMenu();
-        enemyController.AddPhysics();
-        levelController.AddPhysics();
+        gameMenuController.showMenu(true);
+        playerController.killPlayer();
+        if (AddEnvironmentPhysics)
+        {
+            enemyController.AddPhysics();
+            levelController.AddPhysics();
+        }
         gameState = GameStates.Died;
     }
 

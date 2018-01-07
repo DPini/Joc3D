@@ -14,6 +14,11 @@ public class Player : MonoBehaviour {
         playerMovement = playerInstance.GetComponent<PlayerMovement>();
     }
 
+    public void killPlayer()
+    {
+        playerMovement.killPlayer();
+    }
+
     public Vector2Int getTile()
     {
         return Utils.coordsToTile(playerInstance.transform.position);
