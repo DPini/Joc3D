@@ -6,6 +6,8 @@ public class LevelDecorator : MonoBehaviour {
 
 
 	public GameObject[] trees;
+    public GameObject[] ricks;
+
     //public GameObject smallTreeInstance;
     public GameObject mediumTreeInstance;
 	public GameObject bigTreeInstance;
@@ -24,7 +26,7 @@ public class LevelDecorator : MonoBehaviour {
 		// Do nothing	
 	}
 
-	public bool[] DecorateRow( int i , int zoneType ){
+	public bool[] DecorateRow( int i , int zoneType, int level ){
         bool[] row = new bool[50];
         switch (zoneType)
 		{	
@@ -36,18 +38,20 @@ public class LevelDecorator : MonoBehaviour {
                 break;
 			//safe Zone
 			default:
-                row = DecorateGrassFloor(i);
+                row = DecorateGrassFloor(i, level);
 				break;
 		}
         return row;
 		
 	}
 
-	GameObject getRandomTreeInstance(){
+	GameObject getRandomTreeInstance(int level, int i)
+    {
+        if (level == 1 && (i <= -7 || i >= 4)) return ricks[Random.Range(0, ricks.Length)];
 		return trees[Random.Range(0,trees.Length)];
 	}
 
-	private bool[] DecorateGrassFloor( int position ){
+	private bool[] DecorateGrassFloor( int position, int level ){
         bool[] row = new bool[50];
 
         GameObject obj;
@@ -59,9 +63,24 @@ public class LevelDecorator : MonoBehaviour {
 			}
             
 			if ( putTree ) { 
-            	obj = Instantiate(getRandomTreeInstance(), new Vector3(i * tamFloor, 0.5f, position * tamFloor), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
+            	obj = Instantiate(getRandomTreeInstance(level, i), new Vector3(i * tamFloor, 0.5f, position * tamFloor), new Quaternion(0.0f, Mathf.PI /2, 0.0f, 0.0f)) as GameObject;
             	obj.transform.parent = gameObject.transform;
-			}
+                if(level == 1)
+                {
+                    Vector3 rot = obj.transform.rotation.eulerAngles;
+                    if (i <= -7) { 
+                    
+                        rot = new Vector3(rot.x, rot.y - 90, rot.z);
+                        
+                    }
+                    else {
+                           rot = new Vector3(rot.x, rot.y + 90, rot.z);
+                    }
+                    obj.transform.rotation = Quaternion.Euler(rot);
+
+                }
+                
+            }
             row[30 + i] = putTree;
         }
         return row;

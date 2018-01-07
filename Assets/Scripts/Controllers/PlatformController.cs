@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour {
 
-    public GameObject platformModel;
+    public GameObject[] platformModel;
 
     private int maxRows = 50;
     private GameObject[,] platforms;
@@ -37,7 +37,7 @@ public class PlatformController : MonoBehaviour {
     }
 
     // This function only is called if the position is a river
-    public void CreatePlatformRow (int pos) {
+    public void CreatePlatformRow (int pos, int level) {
         int row = pos % maxRows;
         float tamPlatform = Random.Range(2, 4);
 
@@ -51,7 +51,7 @@ public class PlatformController : MonoBehaviour {
         for (int i = 0; i < 6; ++i)
         {
             Destroy(platforms[row, i]);
-            platformTmp = Instantiate(platformModel, new Vector3(-8.0f + (2.5f * (tamPlatform * 1.5f) * i), 0.0f, pos * 1.5f), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
+            platformTmp = Instantiate(platformModel[level], new Vector3(-8.0f + (2.5f * (tamPlatform * 1.5f) * i), 0.0f, pos * 1.5f), new Quaternion(0.0f, Mathf.PI / 2, 0.0f, 0.0f)) as GameObject;
 
             Platform platformSettings = platformTmp.GetComponent<Platform>();
             platformSettings.SetDirection(direction);

@@ -19,9 +19,13 @@ public class FloorLoader : MonoBehaviour
     private EnemyController enemyController;
     private PlatformController platformController;
 
+    private int level;
+
     // Use this for initialization
     public Tile[,] InitializeFloor()
     {
+        level = 1;
+
         Tile[,] matrixLevel = new Tile[100,50];
         int lastZoneUpdated = -4;
         levelDecorator = GameObject.Find("Level").GetComponent<LevelDecorator>();
@@ -37,7 +41,7 @@ public class FloorLoader : MonoBehaviour
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
            
-            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level);
             enemyController.createEnemiesZone(nRow, zoneSize, zoneType);
             nRow += zoneSize;
 
@@ -66,7 +70,9 @@ public class FloorLoader : MonoBehaviour
     }
 
     public Tile[,] UpdateFloor(Tile[,] matrixLevel, int lastPos) {    
+
         int lastZoneUpdated = lastPos;
+        if (lastZoneUpdated >= 50) level = 1;
         
         nRow = lastPos;
         int prevZone = matrixLevel[lastPos % 100,0].zone;
@@ -75,7 +81,7 @@ public class FloorLoader : MonoBehaviour
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
 
-            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType);
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level);
             nRow += zoneSize;
 
             for (int i = lastZoneUpdated % 100; i < nRow % 100; ++i)
@@ -106,11 +112,11 @@ public class FloorLoader : MonoBehaviour
     }
     */
 
-    private bool[][] DecorateZone(int zoneSize, int zoneType) {
+    private bool[][] DecorateZone(int zoneSize, int zoneType, int level) {
         bool[][] decorateMatrix = new bool[zoneSize][];
         for (int i = 0; i < zoneSize; ++i)
         {
-            decorateMatrix[i] = levelDecorator.DecorateRow(i + nRow, zoneType);
+            decorateMatrix[i] = levelDecorator.DecorateRow(i + nRow, zoneType, level);
         }
         return decorateMatrix;
     }
@@ -166,7 +172,7 @@ public class FloorLoader : MonoBehaviour
             case 1:
                 break;
             case 2:
-                platformController.CreatePlatformRow((int)position);
+                platformController.CreatePlatformRow((int)position, level);
                 break;
             case 3:
                 break;
@@ -186,8 +192,8 @@ public class FloorLoader : MonoBehaviour
                 ret = riverFloorInstance[0];
                 break;
             default:
-                if(pos % 2 == 0) ret = safeFloorInstance[1];
-                else ret = safeFloorInstance[0];
+                if(pos % 2 == 0) ret = safeFloorInstance[level * 2 + 1];
+                else ret = safeFloorInstance[level * 2 + 0];
                 break;
         }
         return ret;

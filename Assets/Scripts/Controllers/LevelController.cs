@@ -8,7 +8,7 @@ public class LevelController : MonoBehaviour {
 
     private Tile[,] matrixLevel;
 
-    private int lastPosUpdated;
+    private int lastPosUpdated = 50;
     private int loops;
 
     private bool toUpdate = false;
@@ -49,7 +49,6 @@ public class LevelController : MonoBehaviour {
         //         Debug.Log("[" + i + "," + j + "] = " + matrixLevel[i, j].zone + ", " + matrixLevel[i, j].isAccesible);
         //     }
         // }        
-        lastPosUpdated = 50;
     }
 
     public void ToUpdateMap() {
