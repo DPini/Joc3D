@@ -112,12 +112,15 @@ public class GameController : MonoBehaviour {
 
     }
 
-    public void endGame()
+    public void endGame(bool AddEnvironmentPhysics = false)
     {
         gameMenuController.showMenu(true);
         playerController.killPlayer();
-        enemyController.AddPhysics();
-        levelController.AddPhysics();
+        if (AddEnvironmentPhysics)
+        {
+            enemyController.AddPhysics();
+            levelController.AddPhysics();
+        }
         gameState = GameStates.Died;
     }
 

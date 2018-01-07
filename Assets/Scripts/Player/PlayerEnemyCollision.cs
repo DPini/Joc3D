@@ -6,6 +6,7 @@ public class PlayerEnemyCollision : MonoBehaviour {
 
     private float TimeToReset = 0;
     private GameController gameController;
+    public GameObject waterSplash;
     Color origColor;
 
 	// Use this for initialization
@@ -54,12 +55,16 @@ public class PlayerEnemyCollision : MonoBehaviour {
             rb_other.velocity = dir * 5;
             
 
-            gameController.endGame();
+            gameController.endGame(true);
         }
         else if ( other.transform.tag == "Water")
         {
             gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             TimeToReset = 3.0f;
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            Instantiate(waterSplash, transform.position, Quaternion.identity);
             gameController.endGame();
         }
     }
