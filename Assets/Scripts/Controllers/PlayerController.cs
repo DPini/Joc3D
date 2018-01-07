@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     private Player player;
+
     
 
 	public void Init () {
         player = GameObject.Find("PlayerClass").GetComponent<Player>();
+
         player.Init();
 	}
 

@@ -36,11 +36,12 @@ public class PlayerMovement : MonoBehaviour {
 
     private PlatformController platformController;
 
-
+    private AudioController audioController;
 
     // Use this for initialization
     void Start () {
         platformController = GameObject.Find("Controllers").GetComponent<PlatformController>();
+
         Debug.Log("####Testing CalcDesv#####");
         CalcDesviation(0);
         CalcDesviation(1);
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour {
         CalcDesviation(2.5f);
 
         Debug.Log("####Testing CalcDesv#####");
+
+        audioController = GameObject.Find("Music").GetComponent<AudioController>();
 
 
     }
@@ -125,6 +128,7 @@ public class PlayerMovement : MonoBehaviour {
         else {
 
             platformController.UnSinkPlatform();
+            audioController.Jump();
 
             dest_pos = transform.position + direction_vector(d) * jump_dist;
             if (nextZone == 1) dest_pos = new Vector3(dest_pos.x, 0.3f, dest_pos.z);

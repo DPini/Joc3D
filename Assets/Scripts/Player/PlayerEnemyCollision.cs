@@ -8,10 +8,13 @@ public class PlayerEnemyCollision : MonoBehaviour {
     private GameController gameController;
     Color origColor;
 
-	// Use this for initialization
-	void Start () {
+    private AudioController audioController;
+
+    // Use this for initialization
+    void Start () {
         origColor = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
         gameController = GameObject.Find("Controllers").GetComponent<GameController>();
+        audioController = GameObject.Find("Music").GetComponent<AudioController>();
     }
 	
 	// Update is called once per frame
@@ -52,8 +55,8 @@ public class PlayerEnemyCollision : MonoBehaviour {
             dir.Scale(new Vector3(1, 0, 1));
             rb_other.useGravity = false;
             rb_other.velocity = dir * 5;
-            
 
+            audioController.CarCrash();
             gameController.endGame();
         }
     }

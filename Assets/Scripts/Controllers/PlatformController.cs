@@ -9,16 +9,22 @@ public class PlatformController : MonoBehaviour {
     private int maxRows = 50;
     private GameObject[,] platforms;
 
+    private AudioController audioController;
+
     private Platform sinkedPlatform;
 
 	public void Init () {
         platforms = new GameObject[maxRows, 6];
-	}
+
+        audioController = GameObject.Find("Music").GetComponent<AudioController>();
+    }
 
     public void SinkPlatform(Platform platform) {
         UnSinkPlatform();
         platform.SinkPlatform();
         sinkedPlatform = platform;
+
+        audioController.Splash();
     }
 
     public void UnSinkPlatform()

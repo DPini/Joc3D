@@ -1317,7 +1317,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f945bc0a91b944d4c881e465b9432a0d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1397,7 +1397,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 405e5a5fa8e58104da23f0dcdab5bc92, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1482,6 +1482,10 @@ MonoBehaviour:
   - {fileID: 1500969736}
   actualSoundtrack: {fileID: 0}
   menuMusic: {fileID: 1500969738}
+  jumpEffect: {fileID: 8300000, guid: d15062c16a16a284bb82496c1f6426eb, type: 3}
+  splashEffect: {fileID: 8300000, guid: 96fd74cff63dd5941829f6a60a886944, type: 3}
+  carCrash: {fileID: 8300000, guid: fa0cab3d77a780e4abb4091620201352, type: 3}
+  soundEffects: {fileID: 1500969739}
   i: 0
   bpm: 128
 --- !u!82 &1500969738
@@ -1494,7 +1498,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c3957e2d5e911e64fb1944b51be50939, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
