@@ -7,6 +7,7 @@ public class GameMenuController : MonoBehaviour {
 
     private GameObject deadPanel;
     private GameController gameController;
+    private AudioController audioController;
     private bool isMenuShown;
     
 
@@ -16,16 +17,18 @@ public class GameMenuController : MonoBehaviour {
         deadPanel = GameObject.Find("DeadPanel");
         isMenuShown = false;
         deadPanel.SetActive(isMenuShown);
+        audioController = GameObject.Find("Music").GetComponent<AudioController>();
 
-	}
+    }
 
     public void showMenu()
     {
         if (!isMenuShown)
-        {
+        { 
             deadPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
             isMenuShown = true;
+            audioController.EnterMenu();
         }
     }
 
