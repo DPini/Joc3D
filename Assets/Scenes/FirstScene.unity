@@ -853,7 +853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnemiesPerRow: 15
-  maxRows: 60
+  maxRows: 75
   models:
   - {fileID: 1977796281193266, guid: c03d7a141f014664fa3e50871bc681a8, type: 2}
 --- !u!114 &1052474534
