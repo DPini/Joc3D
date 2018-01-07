@@ -177,9 +177,10 @@ public class FloorLoader : MonoBehaviour
         GameObject ret = null;
         switch (tile) {
             case 1:
-                //if(pos == 0)
-                //if(pos == zoneSize - 1)
-                ret = roadFloorInstance[0];
+                if (zoneSize == 1) ret = roadFloorInstance[3];
+                else if (pos == 0) ret = roadFloorInstance[0];
+                else if (pos == zoneSize - 1) ret = roadFloorInstance[2];
+                else ret = roadFloorInstance[1];
                 break;
             case 2:
                 ret = riverFloorInstance[0];

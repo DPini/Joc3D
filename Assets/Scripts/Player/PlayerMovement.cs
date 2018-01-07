@@ -71,16 +71,14 @@ public class PlayerMovement : MonoBehaviour {
             if (new_x < -9.0f)
             {
                 dest_pos = transform.position;
-                new_x += 0.2f;
-                new_y += 0.2f;
+                new_y -= 0.2f;
                 state = states.jumping;
                 inPlatform = false;
             }
             if (new_x > 5.0f)
             {
                 dest_pos = transform.position;
-                new_x -= 0.2f;
-                new_y += 0.2f;
+                new_y -= 0.2f;
                 state = states.jumping;
                 inPlatform = false;
             }
