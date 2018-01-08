@@ -51,7 +51,10 @@ public class LevelDecorator : MonoBehaviour {
 	GameObject getRandomTreeInstance(int level, int i)
     {
         if (level == 1 && (i <= -7 || i >= 4)) return ricks[Random.Range(0, ricks.Length)];
-		return trees[Random.Range(0,trees.Length)];
+        if (level == 2) {
+            return trees[Random.Range(3, trees.Length)];
+        }
+		return trees[Random.Range(0, 3)];
 	}
 
 
@@ -60,7 +63,7 @@ public class LevelDecorator : MonoBehaviour {
         bool[] row = new bool[50];
 
         GameObject obj;
-        for (int i = -30; i < 20; ++i) { 
+        for (int i = -12; i < 10; ++i) { 
 			bool putTree = true;
 			if ( !(i == -7 || i == 4) ){
                 if (Mathf.Abs(position) < 2 && Mathf.Abs(i) < 2) putTree = false;

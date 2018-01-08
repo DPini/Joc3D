@@ -21,7 +21,7 @@ public class GameMenuController : MonoBehaviour {
 
     }
 
-    public void showMenu( bool b )
+    public void showMenu( bool b, bool endGame = false )
     {
         if (isMenuShown != b)
         {
@@ -31,7 +31,7 @@ public class GameMenuController : MonoBehaviour {
         if (b) 
 	{
             EventSystem.current.SetSelectedGameObject(GameObject.Find("RestartGameBtn"));
-            audioController.EnterMenu();
+            if(endGame) audioController.EnterMenu();
 	}
         else
             EventSystem.current.SetSelectedGameObject(null);

@@ -13,6 +13,8 @@ public class LevelController : MonoBehaviour {
 
     private bool toUpdate = false;
 
+    private bool toDestroy = false;
+
     // Use this for initialization
     public void Init () {
         loops = 0;
@@ -61,9 +63,13 @@ public class LevelController : MonoBehaviour {
     }
 
     public void UpdateMap() {
-        //floorLoader.UpdateFloor(matrixLevel, lastPosUpdated);
-        //lastPosUpdated += 25;
         lastPosUpdated = floorLoader.UpdateFloor(matrixLevel, lastPosUpdated);
+    }
+
+    public void DestroyMap()
+    {
+        if(lastPosUpdated != null)
+            floorLoader.DestroyFloor((lastPosUpdated - 60) * 1.5f);
     }
 
     // Update is called once per frame
@@ -72,7 +78,9 @@ public class LevelController : MonoBehaviour {
         if (toUpdate) {
             UpdateMap();
             toUpdate = false;
+            toDestroy = true;
         }
+         DestroyMap();
 
 
     }

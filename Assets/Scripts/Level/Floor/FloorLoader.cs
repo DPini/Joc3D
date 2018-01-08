@@ -21,6 +21,8 @@ public class FloorLoader : MonoBehaviour
 
     private int level;
 
+    private int freeRow;
+
     // Use this for initialization
     public Tile[,] InitializeFloor(out int lastPosUpdated)
     {
@@ -41,7 +43,7 @@ public class FloorLoader : MonoBehaviour
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
            
-            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level);
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level, prevZone);
             enemyController.createEnemiesZone(nRow, zoneSize, zoneType, level);
             nRow += zoneSize;
 
@@ -76,14 +78,14 @@ public class FloorLoader : MonoBehaviour
         
         nRow = lastPos;
         int prevZone = matrixLevel[lastPos % 100,0].zone;
-        while (nRow <= lastPos + 25)
+        while (nRow <= lastPos + 20)
         {
             int zoneType = GetRandomeZoneInt(prevZone);
             int zoneSize = createZone(zoneType);
             //Debug.Log("Created zone starting in " + nRow + "with size" + zoneSize);
 
 
-            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level);
+            bool[][] decorateMatrix = DecorateZone(zoneSize, zoneType, level, prevZone);
             enemyController.createEnemiesZone(nRow, zoneSize, zoneType, level);
             nRow += zoneSize;
             //Debug.Log("Lastzone: " + lastZoneUpdated + " nRow: " + nRow);
@@ -110,19 +112,38 @@ public class FloorLoader : MonoBehaviour
         return lastZoneUpdated;
     }
     
-    /**
+    
     public void DestroyFloor() {
         Transform[] objectsToDestroy = GameObject.Find("Level").GetComponentsInChildren<Transform>();
 
-        for (int i = 0; i < objectsToDestroy.Length; ++i) {
+        for (int i = objectsToDestroy.Length; i < objectsToDestroy.Length/2 ; ++i) {
             Destroy(objectsToDestroy[i].gameObject);
         }
     }
-    */
 
-    private bool[][] DecorateZone(int zoneSize, int zoneType, int level) {
+    public void DestroyFloor(float limit)
+    {
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Ground");
+        GameObject[] deco = GameObject.FindGameObjectsWithTag("Decoration");
+
+        foreach (GameObject g in tiles)
+        {
+            if (g.transform.position.z <= limit) Destroy(g);
+        }
+
+        foreach (GameObject d in deco)
+        {
+            if (d.transform.position.z <= limit) Destroy(d);
+        }
+
+
+    }
+    
+
+    private bool[][] DecorateZone(int zoneSize, int zoneType, int level, int prevZone) {
         bool[][] decorateMatrix = new bool[zoneSize][];
-        int freeRow = Random.Range(-7, 4);
+        if ( prevZone != zoneType )
+            freeRow = Random.Range(-7, 4);
         for (int i = 0; i < zoneSize; ++i)
         {
             decorateMatrix[i] = levelDecorator.DecorateRow(i + nRow, zoneType, level, freeRow);
@@ -173,7 +194,7 @@ public class FloorLoader : MonoBehaviour
 
     private void CreateRow(float position, GameObject floorInstance, int zoneType) {
         GameObject obj;
-        for (int i = -30; i < 20; ++i) {
+        for (int i = -12; i < 10; ++i) {
             Vector3 pos = new Vector3(i * tamFloor, 3.0f, position * tamFloor);
             if (Physics.Raycast(pos, Vector3.down, 10))
                 Debug.Log("WE HAVE A VERY BIG PROBLEM. DOUBLE TILE BUG. POSITION: " + pos);
