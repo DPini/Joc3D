@@ -105,7 +105,8 @@ public class GameController : MonoBehaviour {
             playerController.update();
 
             if ( Input.GetKeyUp(KeyCode.Escape) ){
-                gameMenuController.showMenu(!gameMenuController.IsMenuActive());
+                if ( gameMenuController.IsCreditsActive() ) gameMenuController.showCredits(false) ; 
+                else gameMenuController.showMenu(!gameMenuController.IsMenuActive());
             }
 
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyUp(KeyCode.G))
@@ -114,7 +115,12 @@ public class GameController : MonoBehaviour {
             }
 
         }
-
+        else{
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                if (gameMenuController.IsCreditsActive()) gameMenuController.showCredits(false);
+            }
+        }
         //enemyController.update(Time.deltaTime);
 
 

@@ -6,17 +6,22 @@ using UnityEngine.EventSystems;
 public class GameMenuController : MonoBehaviour {
 
     private GameObject deadPanel;
+    private GameObject creditsPanel;
     private GameController gameController;
     private AudioController audioController;
     private bool isMenuShown;
+    private bool creditsShown;
     
 
 	// Use this for initialization
 	public void Init() {
         gameController = GameObject.Find("Controllers").GetComponent<GameController>();
         deadPanel = GameObject.Find("DeadPanel");
+        creditsPanel = GameObject.Find("CreditsPanel");
         isMenuShown = false;
         deadPanel.SetActive(isMenuShown);
+        creditsShown = false;
+        creditsPanel.SetActive(creditsShown);
         audioController = GameObject.Find("Music").GetComponent<AudioController>();
 
     }
@@ -37,9 +42,29 @@ public class GameMenuController : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(null);
     }
 
+    public void showCredits( bool b ){
+        if (creditsShown != b)
+        {
+            creditsPanel.SetActive(b);
+            creditsShown = b;
+        }
+        if (b){
+            EventSystem.current.SetSelectedGameObject(null);
+            showMenu(false);
+        }
+        else{
+            showMenu(true);
+        }
+
+    }
+
     public bool IsMenuActive()
     {
         return isMenuShown;
+    }
+
+    public bool IsCreditsActive(){
+        return creditsShown;
     }
 
     public void RestartGameHandler()
@@ -47,9 +72,9 @@ public class GameMenuController : MonoBehaviour {
         gameController.restartGame();
     }
 
-    public void ExitToGameMenuHandler()
+    public void CreditsMenuHandler()
     {
-        Debug.Log("Main menu not implemented yet!");
+        creditsPanel.SetActive(true);
     }
 
     public void ExitToDesktopHandler()
