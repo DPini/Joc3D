@@ -20,6 +20,8 @@ public class Platform : MonoBehaviour {
     public void SetDirection(int toDirection)
     {
         direction = toDirection;
+        if (toDirection > 0)
+            gameObject.transform.Rotate(0.0f, 180.0f, 0.0f);
     }
 
     public float GetDirection()
