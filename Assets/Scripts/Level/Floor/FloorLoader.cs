@@ -144,7 +144,7 @@ public class FloorLoader : MonoBehaviour
     private bool[][] DecorateZone(int zoneSize, int zoneType, int level, int prevZone) {
         bool[][] decorateMatrix = new bool[zoneSize][];
         if ( prevZone != zoneType )
-            freeRow = Random.Range(-7, 4);
+            freeRow = Random.Range(-6, 4);
         for (int i = 0; i < zoneSize; ++i)
         {
             decorateMatrix[i] = levelDecorator.DecorateRow(i + nRow, zoneType, level, freeRow);
