@@ -150,8 +150,7 @@ public class FloorLoader : MonoBehaviour
                 size = Random.Range(1, 3 + level);
                 break;
             case 2: //river
-                size = Random.Range(1, 2);
-                if (level == 2) ++size;
+                size = Random.Range(1, 2 + level);
                 break;
             default: //safe-zone
                 size = Random.Range(1, 2 + (2 - level));
@@ -163,7 +162,7 @@ public class FloorLoader : MonoBehaviour
     private int GetRandomeZoneInt(int prevZone)
     {
         if (prevZone == -1) return 0;
-        if (prevZone == 2 && level < 2) return 0;
+        if (prevZone == 2 && level == 0) return 0;
         int rnd = Random.Range(0, 3);
         while (rnd == prevZone)
         {
