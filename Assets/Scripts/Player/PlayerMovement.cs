@@ -161,20 +161,22 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private float CalcDesviation( float position ) { 
-        //Debug.Log("dest x pos: " + position);
-        //Debug.Log("Modulo :" + position % 1.5f);
+        Debug.Log("dest x pos: " + position);
+        Debug.Log("Modulo :" + position % 1.5f);
         float desviation = (position % 1.5f) + 1.5f % 1.5f;
         if (desviation != 0)
         {
-            if (desviation < (1.5f - desviation))
+            if (Mathf.Abs(desviation) < (1.5f / 2.0f))
             {
-                //Debug.Log("Desviación: " + -desviation);
+                Debug.Log("Desviación derecha: " + -desviation);
                 return -desviation;
             }
             else
             {
-                //Debug.Log("Desviación: " + (1.5f - desviation));
-                return 1.5f - desviation;
+                Debug.Log("Desviación izquierda: " + (1.5f - Mathf.Abs(desviation)));
+                float finalDesviation = 1.5f - Mathf.Abs(desviation);
+                if (position < 0) finalDesviation = -finalDesviation;
+                return finalDesviation;
             }
         }
         //Debug.Log("Desviación: " + desviation);
