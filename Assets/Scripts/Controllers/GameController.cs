@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
     private GameMenuController gameMenuController;
     private InputController inputController;
 
+    private PlatformController platformController;
+
     enum GameStates { Playing, Died };
     private GameStates gameState;
 
@@ -26,6 +28,7 @@ public class GameController : MonoBehaviour {
         scoreController = controllers.GetComponent<ScoreController>();
         gameMenuController = controllers.GetComponent<GameMenuController>();
         inputController = controllers.GetComponent<InputController>();
+        platformController = controllers.GetComponent<PlatformController>();
 
 
         levelController.Init();
@@ -124,6 +127,7 @@ public class GameController : MonoBehaviour {
         if (AddEnvironmentPhysics)
         {
             enemyController.AddPhysics();
+            platformController.AddPhysics();
             levelController.AddPhysics();
         }
         gameState = GameStates.Died;

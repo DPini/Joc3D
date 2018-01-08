@@ -53,7 +53,7 @@ public class PlayerEnemyCollision : MonoBehaviour {
                 rb.isKinematic = false;
                 rb.useGravity = true;
                 Vector3 dir = other.transform.position - transform.position;
-                rb.velocity = -dir*5;
+                rb.velocity = dir*5;
 
                 MeshCollider mc = gameObject.GetComponent<MeshCollider>();
                 mc.isTrigger = false;
@@ -64,7 +64,7 @@ public class PlayerEnemyCollision : MonoBehaviour {
                 Vector3 dir_other = dir;
                 dir.Scale(new Vector3(1, 0, 1));
                 rb_other.useGravity = false;
-                rb_other.velocity = dir * 5;
+                rb_other.velocity = -dir * 5;
 
                 audioController.CarCrash();
                 gameController.endGame(true);

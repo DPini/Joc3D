@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4862441637000790}
   - component: {fileID: 65071417866373110}
-  - component: {fileID: 54389910511416256}
   m_Layer: 0
   m_Name: alien-tree-2
   m_TagString: Decoration
@@ -113,21 +112,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1284560465210908}
   m_Mesh: {fileID: 4300000, guid: 84416134d25d4704f86938212e51f3d9, type: 3}
---- !u!54 &54389910511416256
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1645121332610896}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &65071417866373110
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -136,7 +120,7 @@ BoxCollider:
   m_GameObject: {fileID: 1645121332610896}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 10, y: 19, z: 12}
   m_Center: {x: -0.5, y: 9.5, z: 0}

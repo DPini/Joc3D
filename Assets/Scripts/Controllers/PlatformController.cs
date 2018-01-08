@@ -62,4 +62,17 @@ public class PlatformController : MonoBehaviour {
         }
         
 	}
+
+    public void AddPhysics()
+    {
+        foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("PlatformGround"))
+        {
+            Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
+            rb.isKinematic = false;
+            gameObj.GetComponent<BoxCollider>().isTrigger = false;
+            gameObj.GetComponent<Platform>().SetSpeed(0);
+        }
+
+    }
+
 }

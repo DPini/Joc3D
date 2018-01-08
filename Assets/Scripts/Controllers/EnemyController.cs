@@ -96,7 +96,8 @@ public class EnemyController : MonoBehaviour {
         foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             //gameObj.AddComponent<Rigidbody>();
-            Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
+            Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
+            rb.isKinematic = false;
             gameObj.GetComponent<BoxCollider>().isTrigger = false;
             gameObj.GetComponent<Enemy>().setVelocity(0);
         }

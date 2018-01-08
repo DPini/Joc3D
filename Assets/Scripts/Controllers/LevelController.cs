@@ -99,6 +99,13 @@ public class LevelController : MonoBehaviour {
             rb.useGravity = false;
         }
 
+        foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Water"))
+        {
+            Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
+            rb.isKinematic = false;
+            rb.useGravity = false;
+        }
+
         foreach (GameObject gameObj in GameObject.FindGameObjectsWithTag("Decoration"))
         {
             Rigidbody rb = Utils.GetComponentAddIfNotExists<Rigidbody>(gameObj);
