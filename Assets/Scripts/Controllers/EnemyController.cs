@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour {
         int row = ((pos % maxRows) + maxRows) % maxRows;
         int n = Random.Range(2, maxEnemiesPerRow);
 
-        GameObject model = models[Random.Range(models.Length / 2 * level, models.Length / 2 * level + 2)];
+        GameObject model = models[Random.Range(0, 2) + level * 2];
 
         float distanceEnemies = Random.Range(3.0f, 5.0f);
 
@@ -57,11 +57,14 @@ public class EnemyController : MonoBehaviour {
         {
             Destroy(enemies[row, i]);
             if ( i <= n ) {
-                float height = 0.0f;
-                if (model.name == "Bus") height = 0.15f;
+                float height = 0.3f;
                 
                 enemies[row, i] = Instantiate(model, new Vector3(initSequence + (distanceEnemies * (tamFloor * 1.5f) * i), height, pos * tamFloor), new Quaternion(0.0f, Mathf.PI , 0.0f, 0.0f)) as GameObject;
-                if (model.name != "Bus") enemies[row, i].transform.Rotate(0.0f, -90.0f, 0.0f);
+                if (model.name != "Bus")
+                {
+                    enemies[row, i].transform.Rotate(0.0f, -90.0f, 0.0f);
+                    if(model.name.Contains("alien")) enemies[row, i].transform.Rotate(0.0f, 180.0f, 0.0f);
+                }
             }
         }
     }

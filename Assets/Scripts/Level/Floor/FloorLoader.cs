@@ -74,7 +74,8 @@ public class FloorLoader : MonoBehaviour
     public int UpdateFloor(Tile[,] matrixLevel, int lastPos) {    
 
         int lastZoneUpdated = lastPos;
-        if (lastZoneUpdated >= 50) level = 1;
+        if (lastZoneUpdated >= 100) level = 2;
+        else if (lastZoneUpdated >= 50) level = 1;
         
         nRow = lastPos;
         int prevZone = matrixLevel[lastPos % 100,0].zone;
@@ -217,13 +218,14 @@ public class FloorLoader : MonoBehaviour
         GameObject ret = null;
         switch (tile) {
             case 1:
-                if (zoneSize == 1) ret = roadFloorInstance[3];
+                if (level == 2) ret = roadFloorInstance[4];
+                else if (zoneSize == 1) ret = roadFloorInstance[3];
                 else if (pos == 0) ret = roadFloorInstance[0];
                 else if (pos == zoneSize - 1) ret = roadFloorInstance[2];
                 else ret = roadFloorInstance[1];
                 break;
             case 2:
-                ret = riverFloorInstance[0];
+                ret = riverFloorInstance[level];
                 break;
             default:
                 if(pos % 2 == 0) ret = safeFloorInstance[level * 2 + 1];
